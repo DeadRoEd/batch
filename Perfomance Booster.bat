@@ -24,25 +24,44 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------
 
-cls
-echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-echo                    PC Booster
-echo                        v1
-echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+:MMenu
+    cls
+    color 0b
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo               Performance Booster
+    echo                      v1.1
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 REM --> Cleaner Section
 echo Run temporary files cleaner?
-set /p M=Type 1 (Yes) or 0 (No) then press ENTER:
+set /p cln=Type 1 (Yes), 0 (No) or 2 (Exit) then press ENTER:
+cls
+color 0c
 echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-If %M%==1 (
+If %cln%==1 (
     echo Running cleaner...
     Del /S /F /Q %temp%
     Del /S /F /Q %Windir%\Temp
 )
-If %M%==0 (
+If %cln%==0 (
     echo Skipped cleaner...
+)
+If %cln%==2 (
+    goto exit
 )
 
 echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 pause
+goto MMenu
+
+:exit
+    echo Are you sure to close the program?
+    set /p close= Y(es) or N(o)?
+    If %close%==Y (
+       exit
+    )
+    If %close%==N (
+       goto MMenu
+    )
