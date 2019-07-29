@@ -1,0 +1,7 @@
+https://commandwindows.com/command3.htm
+https://ss64.com/nt/
+https://superuser.com/questions/705813/batch-file-with-commands-to-run-as-administrator-and-standard-user?fbclid=IwAR1czUuyK6TORAwGkAKI9XFNT99jYS3EqDxILxiSqRFBieFPYppauFffoXM
+https://www.tenforums.com/tutorials/3234-environment-variables-windows-10-a.html?fbclid=IwAR25KPwE00Ma0iXncZ7SHJ4SIUbPPNrjGPU1FGhDLBgfdQ_7OQTGmfrUqu8
+https://stackoverflow.com/questions/6811372/how-to-code-a-bat-file-to-always-run-as-admin-mode?fbclid=IwAR0bAb5vCB2D-BwwvADwyBhi95PVy3-_DLFqprs1IA7iajZ5T6q_2wCQZtk
+http://lexisnexis.custhelp.com/app/answers/answer_view/a_id/1084415/~/clearing-the-windows-temp-folders?fbclid=IwAR2PaLI-pyFFpeLqicTKqWxQZrec-Oggs_lpc85pullVfJMMrQDYwf3-nM0
+https://www.computerhope.com/choicehl.htm?fbclid=IwAR3HzEolpRTTSqct8KYLSClpXvRfm4IZPzpbGhjv8fXuP02j92HvZqZjbb4
