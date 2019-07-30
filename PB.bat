@@ -24,40 +24,64 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------
 
-
 :MMenu
     cls
     color 0a
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo               Performance Booster
-    echo                        v2
+    echo                        r2
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo 1. Temporary files cleaner
-    echo 2. Perfetch files cleaner
-    echo 3. Programs
-    echo 4. Exit
+    echo 1. Files Cleaner
+    echo 2. RAM Cleaner
+    echo 3. Registry Patcher
+    echo 4. Disk Checker and Fixer
+    echo 5. DNS Configurator
+    echo 6. Remove bloatwares
+    echo 7. Disable start-up programs
+    echo 8. Reset Settings
+    echo 0. Exit
     set /p mm=Please enter the number of choice then press ENTER:
+    If %mm%==0 (
+        cls
+        goto x
+    )
     If %mm%==1 (
         cls
         goto cln
     )
     If %mm%==2 (
         cls
-        goto prf
+        goto ram
     )
     If %mm%==3 (
         cls
-        goto pgr
+        goto rgp
     )
     If %mm%==4 (
         cls
-        goto x
+        goto dskchk
+    )
+    If %mm%==5 (
+        cls
+        goto dnsc
+    )
+    If %mm%==6 (
+        cls
+        goto rmv
+    )
+    If %mm%==7 (
+        cls
+        goto dsp
+    )
+    If %mm%==8 (
+        cls
+        goto reset
     )
 
 :cln
     color 0b    
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo Run temporary files cleaner?
+    echo                 Run files cleaner?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     set /p cln= Y(es) or N(o)?
 
@@ -73,53 +97,109 @@ if '%errorlevel%' NEQ '0' (
         goto MMenu
     )
     
-:prf
+:ram
     color 0c
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo Run perfetch files cleaner?
+    echo        Do you want to enable RAM Clearer?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p prf= Y(es) or N(o)?
+    set /p rm=Y(es) or N(o)?
 
-    If %prf%==Y (
-        echo Running cleaner...
-        Del /S /F /Q %temp%
-        Del /S /F /Q %Windir%\Temp
+    If %rm%==Y (
         pause
         goto MMenu
     )
-    If %prf%==N (
-        echo Skipped cleaner...
+    If %rm%==N (
         goto MMenu
     )
-    
-:pgr
+
+:rgp
     color 0d
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo What program do you want to install?
-    echo 1. RAMBooster
-    echo 2. CPUSet
-    echo 0. Go back to menu
+    echo       Do you want to apply Registry Patches?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p pgr=Please enter the number of choice then press ENTER:
+    set /p rm=Y(es) or N(o)?
 
-    If %pgr%==1 (
+    If %rm%==Y (
         pause
         goto MMenu
     )
-    If %pgr%==2 (
+    If %rm%==N (
+        goto MMenu
+    )
+
+:dskchk
+    color 0e
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo            Checking disks for errors...
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    goto MMenu
+
+:dnsc
+    color 0f
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo        Do you want to change dns settings?
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    set /p set=Y(es) or N(o)?
+
+    If %set%==Y (
         pause
         goto MMenu
     )
-    If %pgr%==0 (
+    If %set%==N (
         goto MMenu
     )
-    
+
+:rmv
+    color 0a
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo Do you want to remove pre-installed bloatware applications?
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    set /p set=Y(es) or N(o)?
+
+    If %set%==Y (
+        pause
+        goto MMenu
+    )
+    If %set%==N (
+        goto MMenu
+    )
+
+:dsp
+    color 0b
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo      Do you want to disable start-up programs?
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    set /p set=Y(es) or N(o)?
+
+    If %set%==Y (
+        pause
+        goto MMenu
+    )
+    If %set%==N (
+        goto MMenu
+    )
+
+:reset
+    color 0c
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    echo          Do you want to reset settings?
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    set /p set=Y(es) or N(o)?
+
+    If %set%==Y (
+        pause
+        goto MMenu
+    )
+    If %set%==N (
+        goto MMenu
+    )
 
 :x
+    color 70
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo Are you sure to close the program?
+    echo        Are you sure to close the program?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p close= Y(es) or N(o)?
+    set /p close=Y(es) or N(o)?
     If %close%==Y (
        exit
     )
