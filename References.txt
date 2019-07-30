@@ -6,3 +6,4 @@ https://stackoverflow.com/questions/6811372/how-to-code-a-bat-file-to-always-run
 http://lexisnexis.custhelp.com/app/answers/answer_view/a_id/1084415/~/clearing-the-windows-temp-folders?fbclid=IwAR2PaLI-pyFFpeLqicTKqWxQZrec-Oggs_lpc85pullVfJMMrQDYwf3-nM0
 https://www.computerhope.com/choicehl.htm?fbclid=IwAR3HzEolpRTTSqct8KYLSClpXvRfm4IZPzpbGhjv8fXuP02j92HvZqZjbb4
 https://www.windowscentral.com/how-edit-registry-using-command-prompt-windows-10
+https://ccm.net/faq/24855-windows-clear-ram-without-rebooting-your-pc
