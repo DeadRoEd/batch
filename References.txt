@@ -7,3 +7,4 @@ http://lexisnexis.custhelp.com/app/answers/answer_view/a_id/1084415/~/clearing-t
 https://www.computerhope.com/choicehl.htm?fbclid=IwAR3HzEolpRTTSqct8KYLSClpXvRfm4IZPzpbGhjv8fXuP02j92HvZqZjbb4
 https://www.windowscentral.com/how-edit-registry-using-command-prompt-windows-10
 https://ccm.net/faq/24855-windows-clear-ram-without-rebooting-your-pc
+https://stackoverflow.com/questions/18620173/how-can-i-set-change-dns-using-the-command-prompt-at-windows-8
