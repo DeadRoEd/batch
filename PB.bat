@@ -29,7 +29,7 @@ if '%errorlevel%' NEQ '0' (
     color 0a
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo               Performance Booster
-    echo                        r2
+    echo                       r2.1
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo 1. Files Cleaner
     echo 2. RAM Cleaner
@@ -102,13 +102,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to enable RAM Clearer?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p rm=Y(es) or N(o)?
+    set /p ram=Y(es) or N(o)?
 
-    If %rm%==Y (
+    If %ram%==Y (
         pause
         goto MMenu
     )
-    If %rm%==N (
+    If %ram%==N (
         goto MMenu
     )
 
@@ -117,13 +117,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo       Do you want to apply Registry Patches?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p rm=Y(es) or N(o)?
+    set /p rgp=Y(es) or N(o)?
 
-    If %rm%==Y (
+    If %rgp%==Y (
         pause
         goto MMenu
     )
-    If %rm%==N (
+    If %rgp%==N (
         goto MMenu
     )
 
@@ -139,13 +139,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to change dns settings?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p set=Y(es) or N(o)?
+    set /p dnsc=Y(es) or N(o)?
 
-    If %set%==Y (
+    If %dnsc%==Y (
         pause
         goto MMenu
     )
-    If %set%==N (
+    If %dnsc%==N (
         goto MMenu
     )
 
@@ -154,13 +154,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo Do you want to remove pre-installed bloatware applications?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p set=Y(es) or N(o)?
+    set /p rmv=Y(es) or N(o)?
 
-    If %set%==Y (
+    If %rmv%==Y (
         pause
         goto MMenu
     )
-    If %set%==N (
+    If %rmv%==N (
         goto MMenu
     )
 
@@ -169,13 +169,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo      Do you want to disable start-up programs?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p set=Y(es) or N(o)?
+    set /p dsp=Y(es) or N(o)?
 
-    If %set%==Y (
+    If %dsp%==Y (
         pause
         goto MMenu
     )
-    If %set%==N (
+    If %dsp%==N (
         goto MMenu
     )
 
