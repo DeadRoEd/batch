@@ -83,16 +83,16 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo                 Run files cleaner?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p cln= Y(es) or N(o)?
+    set /p cln=Yes(1) or No(0)?
 
-    If %cln%==Y (
+    If %cln%==1 (
         echo Running cleaner...
         Del /S /F /Q %temp%
         Del /S /F /Q %Windir%\Temp
         pause
         goto MMenu
     )
-    If %cln%==N (
+    If %cln%==0 (
         echo Skipped cleaner...
         goto MMenu
     )
@@ -102,13 +102,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to enable RAM Clearer?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p ram=Y(es) or N(o)?
+    set /p ram=Yes(1) or No(0)?
 
-    If %ram%==Y (
+    If %ram%==1 (
         pause
         goto MMenu
     )
-    If %ram%==N (
+    If %ram%==0 (
         goto MMenu
     )
 
@@ -117,13 +117,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo       Do you want to apply Registry Patches?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p rgp=Y(es) or N(o)?
+    set /p rgp=Yes(1) or No(0)?
 
-    If %rgp%==Y (
+    If %rgp%==1 (
         pause
         goto MMenu
     )
-    If %rgp%==N (
+    If %rgp%==0 (
         goto MMenu
     )
 
@@ -139,13 +139,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to change dns settings?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p dnsc=Y(es) or N(o)?
+    set /p dnsc=Yes(1) or No(0)?
 
-    If %dnsc%==Y (
+    If %dnsc%==1 (
         pause
         goto MMenu
     )
-    If %dnsc%==N (
+    If %dnsc%==0 (
         goto MMenu
     )
 
@@ -154,13 +154,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo Do you want to remove pre-installed bloatware applications?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p rmv=Y(es) or N(o)?
+    set /p rmv=Yes(1) or No(0)?
 
-    If %rmv%==Y (
+    If %rmv%==1 (
         pause
         goto MMenu
     )
-    If %rmv%==N (
+    If %rmv%==0 (
         goto MMenu
     )
 
@@ -169,13 +169,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo      Do you want to disable start-up programs?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p dsp=Y(es) or N(o)?
-
-    If %dsp%==Y (
+    set /p dsp=Yes(1) or No(0)?
+    
+    If %dsp%==1 (
         pause
         goto MMenu
     )
-    If %dsp%==N (
+    If %dsp%==0 (
         goto MMenu
     )
 
@@ -184,13 +184,13 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo          Do you want to reset settings?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p set=Y(es) or N(o)?
+    set /p set=Yes(1) or No(0)?
 
-    If %set%==Y (
+    If %set%==1 (
         pause
         goto MMenu
     )
-    If %set%==N (
+    If %set%==0 (
         goto MMenu
     )
 
@@ -199,10 +199,10 @@ if '%errorlevel%' NEQ '0' (
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Are you sure to close the program?
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p close=Y(es) or N(o)?
-    If %close%==Y (
+    set /p close=Yes(1) or No(0)?
+    If %close%==1 (
        exit
     )
-    If %close%==N (
+    If %close%==0 (
        goto MMenu
     )
