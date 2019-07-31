@@ -83,8 +83,6 @@ if '%errorlevel%' NEQ '0' (
 
     If %cln%==1 (
         echo Running cleaner...
-        Del /S /F /Q %temp%
-        Del /S /F /Q %Windir%\Temp
         pause
         goto MMenu
     ) else (
