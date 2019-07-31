@@ -7,3 +7,4 @@ https://www.computerhope.com/choicehl.htm?fbclid=IwAR3HzEolpRTTSqct8KYLSClpXvRfm
 https://www.windowscentral.com/how-edit-registry-using-command-prompt-windows-10
 https://ccm.net/faq/24855-windows-clear-ram-without-rebooting-your-pc
 https://stackoverflow.com/questions/18620173/how-can-i-set-change-dns-using-the-command-prompt-at-windows-8
+https://support.microsoft.com/en-us/help/814596/how-to-use-schtasks-exe-to-schedule-tasks-in-windows-server-2003
