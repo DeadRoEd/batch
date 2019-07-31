@@ -29,7 +29,7 @@ if '%errorlevel%' NEQ '0' (
     color 0a
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo               Performance Booster
-    echo                       r2.1
+    echo                       r2.2
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo 1. Files Cleaner
     echo 2. RAM Cleaner
@@ -41,44 +41,40 @@ if '%errorlevel%' NEQ '0' (
     echo 8. Reset Settings
     echo 0. Exit
     set /p mm=Please enter the number of choice then press ENTER:
+    
     If %mm%==0 (
-        cls
         goto x
-    )
+    ) else (
     If %mm%==1 (
-        cls
         goto cln
-    )
+    ) else (
     If %mm%==2 (
-        cls
         goto ram
-    )
+    ) else (
     If %mm%==3 (
-        cls
         goto rgp
-    )
+    ) else (
     If %mm%==4 (
-        cls
         goto dskchk
-    )
+    ) else (
     If %mm%==5 (
-        cls
         goto dnsc
-    )
+    ) else (
     If %mm%==6 (
-        cls
         goto rmv
-    )
+    ) else (
     If %mm%==7 (
-        cls
         goto dsp
-    )
+    ) else (
     If %mm%==8 (
-        cls
         goto reset
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto MMenu 
+    )))))))))
 
 :cln
+    cls
     color 0b    
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo                 Run files cleaner?
@@ -91,13 +87,17 @@ if '%errorlevel%' NEQ '0' (
         Del /S /F /Q %Windir%\Temp
         pause
         goto MMenu
-    )
+    ) else (
     If %cln%==0 (
         echo Skipped cleaner...
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto cln
+    ))
     
 :ram
+    cls
     color 0c
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to enable RAM Clearer?
@@ -107,12 +107,16 @@ if '%errorlevel%' NEQ '0' (
     If %ram%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %ram%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto ram 
+    ))
 
 :rgp
+    cls
     color 0d
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo       Do you want to apply Registry Patches?
@@ -122,19 +126,25 @@ if '%errorlevel%' NEQ '0' (
     If %rgp%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %rgp%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto rgp 
+    ))
 
 :dskchk
+    cls
     color 0e
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo            Checking disks for errors...
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    pause
     goto MMenu
 
 :dnsc
+    cls
     color 0f
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Do you want to change dns settings?
@@ -144,12 +154,16 @@ if '%errorlevel%' NEQ '0' (
     If %dnsc%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %dnsc%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto dnsc 
+    ))
 
 :rmv
+    cls
     color 0a
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo Do you want to remove pre-installed bloatware applications?
@@ -159,12 +173,16 @@ if '%errorlevel%' NEQ '0' (
     If %rmv%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %rmv%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto rmv 
+    ))
 
 :dsp
+    cls
     color 0b
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo      Do you want to disable start-up programs?
@@ -174,12 +192,16 @@ if '%errorlevel%' NEQ '0' (
     If %dsp%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %dsp%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto dsp 
+    ))
 
 :reset
+    cls
     color 0c
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo          Do you want to reset settings?
@@ -189,12 +211,16 @@ if '%errorlevel%' NEQ '0' (
     If %set%==1 (
         pause
         goto MMenu
-    )
+    ) else (
     If %set%==0 (
         goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto reset 
+    ))
 
 :x
+    cls
     color 70
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo        Are you sure to close the program?
@@ -202,7 +228,10 @@ if '%errorlevel%' NEQ '0' (
     set /p close=Yes(1) or No(0)?
     If %close%==1 (
        exit
-    )
+    ) else (
     If %close%==0 (
        goto MMenu
-    )
+    ) else ( echo Unknown value input! Please retry
+             pause
+             goto x 
+    ))
