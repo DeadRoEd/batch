@@ -29,7 +29,7 @@ if '%errorlevel%' NEQ '0' (
     color 0a
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo               Performance Booster
-    echo                       r2.2
+    echo                       r2.3
     echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     echo 1. Files Cleaner
     echo 2. RAM Cleaner
@@ -37,8 +37,6 @@ if '%errorlevel%' NEQ '0' (
     echo 4. Disk Checker and Fixer
     echo 5. DNS Configurator
     echo 6. Remove bloatwares
-    echo 7. Disable start-up programs
-    echo 8. Reset Settings
     echo 0. Exit
     set /p mm=Please enter the number of choice then press ENTER:
     
@@ -62,16 +60,10 @@ if '%errorlevel%' NEQ '0' (
     ) else (
     If %mm%==6 (
         goto rmv
-    ) else (
-    If %mm%==7 (
-        goto dsp
-    ) else (
-    If %mm%==8 (
-        goto reset
     ) else ( echo Unknown value input! Please retry
              pause
              goto MMenu 
-    )))))))))
+    )))))))
 
 :cln
     cls
@@ -177,44 +169,6 @@ if '%errorlevel%' NEQ '0' (
     ) else ( echo Unknown value input! Please retry
              pause
              goto rmv 
-    ))
-
-:dsp
-    cls
-    color 0b
-    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo      Do you want to disable start-up programs?
-    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p dsp=Yes(1) or No(0)?
-    
-    If %dsp%==1 (
-        pause
-        goto MMenu
-    ) else (
-    If %dsp%==0 (
-        goto MMenu
-    ) else ( echo Unknown value input! Please retry
-             pause
-             goto dsp 
-    ))
-
-:reset
-    cls
-    color 0c
-    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    echo          Do you want to reset settings?
-    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    set /p set=Yes(1) or No(0)?
-
-    If %set%==1 (
-        pause
-        goto MMenu
-    ) else (
-    If %set%==0 (
-        goto MMenu
-    ) else ( echo Unknown value input! Please retry
-             pause
-             goto reset 
     ))
 
 :x
