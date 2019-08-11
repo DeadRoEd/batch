@@ -187,3 +187,11 @@ if '%errorlevel%' NEQ '0' (
              pause
              goto x 
     ))
+
+REM --> ROLES
+
+REM --> @Ronwell Carl Langit and @Isma Garcia
+REM --> files cleaner, and disk checker and fixer
+
+REM --> @Luis Gabriel Palacios @Jude Mendoza Duqueza and @Mark Quinto 
+REM --> DNS Configurator and remove bloatwares
