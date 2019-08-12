@@ -13,3 +13,4 @@ https://blog.pcrisk.com/windows/12022-how-to-get-rid-of-bloatware-in-windows-10
 https://stackoverflow.com/questions/1702762/how-to-create-an-empty-file-at-the-command-line-in-windows
 https://visihow.com/Increase_Computer_Speed_Using_your_Notepad
 https://www.tech-recipes.com/rx/57409/create-folder-using-cmd-windows/
+https://stackoverflow.com/questions/132799/how-can-i-echo-a-newline-in-a-batch-file
