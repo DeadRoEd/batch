@@ -1,5 +1,7 @@
 @echo off
 
+:prg
+
 :: BatchGotAdmin
 :-------------------------------------
 REM  --> Check for permissions
@@ -114,6 +116,9 @@ REM --> Menu Start
         echo 5. DNS Configurator
         echo 6. Remove bloatwares
         echo 0. Exit
+        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo    !Do not press enter without putting a value!
+        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         set /p mm=Please enter the number of choice then press ENTER:
         
         If %mm%==0 (
@@ -173,6 +178,7 @@ REM --> Menu Start
         if not exist "%ron%" goto ram1
 
         :ramexist
+        color 0c
         echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         REM --> for rcls
         if exist "%rc1%" echo RamOps enabled for 512MB RAM
@@ -324,25 +330,21 @@ REM --> MODULES Start
             set /p rcln= 512MB (1), 1GB (2), 2GB (3), or 4GB+ (4) (0 to cancel)?
             
             If %rcln%==1 (
-                set rc=1
                 set rm=51200000
                 echo Setting .vbs script for 512MB RAM...
                 goto rtime
             ) else (
             If %rcln%==2 (
-                set rc=2
                 set rm=102400000
                 echo Setting .vbs script for 1GB RAM...
                 goto rtime
             ) else (
             If %rcln%==3 (
-                set rc=3
                 set rm=204800000
                 echo Setting .vbs script for 2GB RAM...
                 goto rtime
             ) else (
             If %rcln%==4 (
-                set rc=4
                 set rm=409600000
                 echo Setting .vbs script for 4GB+ RAM...
                 goto rtime
@@ -410,3 +412,6 @@ REM --> files cleaner, and disk checker and fixer
 
 REM --> @Luis Gabriel Palacios @Jude Mendoza Duqueza and @Mark Quinto 
 REM --> DNS Configurator and remove bloatwares
+
+REM --> End code
+goto prg
