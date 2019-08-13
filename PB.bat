@@ -116,7 +116,7 @@ REM --> Menu Start
         color 0a
         echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         echo               Performance Booster
-        echo                        r4
+        echo                      r4.1
         echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         echo 1. Files Cleaner
         echo 2. RAM Cleaner
@@ -345,6 +345,7 @@ REM --> MODULES Start
                 reg restore "%lmo%" "%rd2%" 
                 reg restore "%cur%" "%rd3%" 
                 reg restore "%cuo%" "%rd4%" 
+                PING -n 3 127.0.0.1>nul
                 del "%rd1%"
                 del "%rd2%"
                 del "%rd3%"
@@ -354,12 +355,14 @@ REM --> MODULES Start
             
             :resrm2
                 reg restore "%dt%" "%ra1%" 
+                PING -n 3 127.0.0.1>nul
                 del "%ra1%"
                 del "%rp2%"
                 goto rconfirm
 
             :resrm3
                 reg restore "%ex%" "%re1%" 
+                PING -n 3 127.0.0.1>nul
                 del "%re1%"
                 del "%rp3%"
                 goto rconfirm
@@ -422,6 +425,7 @@ REM --> MODULES Start
             if not exist "%rp1%" echo 1. Disable all Start-up programs
             if not exist "%rp2%" echo 2. Make desktop faster
             if not exist "%rp3%" echo 3. Make explorer faster
+            if not exist "%regon%" echo 4. Patch all
             echo 0. Go back to main menu
             echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             echo           !NOTE: Reboot after applying!
@@ -430,18 +434,26 @@ REM --> MODULES Start
 
             If %rmm%==1 (
                 PING -n 3 127.0.0.1>nul
+                set rmall=0
                 if exist "%rp1%" goto rong
                 goto regp1
             ) else (
             If %rmm%==2 (
                 PING -n 3 127.0.0.1>nul
+                set rmall=0
                 if exist "%rp2%" goto rong
                 goto regp2
             ) else (
             If %rmm%==3 (
                 PING -n 3 127.0.0.1>nul
+                set rmall=0
                 if exist "%rp3%" goto rong
                 goto regp3
+            ) else (
+            If %rmm%==4 (
+                PING -n 3 127.0.0.1>nul
+                set rmall=1
+                goto regp1y
             ) else (
             If %rmm%==0 (
                 echo Going back to main menu...
@@ -450,7 +462,7 @@ REM --> MODULES Start
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
                     goto regmenu
-            ))))
+            )))))
         
         :rong
             echo Unknown value input! Please retry
@@ -464,6 +476,7 @@ REM --> MODULES Start
             set /p rp1=Yes(1) or No(0)?
 
             If %rp1%==1 (
+                :regp1y
                 if not exist "%regon%" type 1 >reg_on
                 type 1 >rp.1
                 REM --> Backup
@@ -478,12 +491,15 @@ REM --> MODULES Start
                 reg delete "%cuo%" /f /va
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                goto regmenu
+                if %rmall%==1 (
+                    goto regp2y
+                ) else ( goto MMenu
+                )
             ) else (
             If %rp1%==0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
-                goto regmenu
+                goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
                     goto regp1
@@ -499,6 +515,7 @@ REM --> MODULES Start
             set /p rp2=Yes(1) or No(0)?
 
             If %rp2%==1 (
+                :regp2y
                 if not exist "%regon%" type 1 >reg_on
                 type 1 >rp.2
                 REM --> Backup
@@ -511,12 +528,15 @@ REM --> MODULES Start
                 reg add "%dt%" /v LowLevelHooksTimeout /t REG_SZ /f /d 1000
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                goto regmenu
+                if %rmall%==1 (
+                    goto regp3y
+                ) else ( goto MMenu
+                )
             ) else (
             If %rp2%==0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
-                goto regmenu
+                goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
                     goto regp2
@@ -531,6 +551,7 @@ REM --> MODULES Start
             set /p rp3=Yes(1) or No(0)?
 
             If %rp3%==1 (
+                :regp3y
                 if not exist "%regon%" type 1 >reg_on
                 type 1 >rp.3
                 REM --> Backup
@@ -543,12 +564,12 @@ REM --> MODULES Start
                 reg add "%ex%" /v NoInternetOpenWith /t REG_DWORD /f /d 1
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                goto regmenu
+                goto MMenu
             ) else (
             If %rp3%==0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
-                goto regmenu
+                goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
                     goto regp3
