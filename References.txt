@@ -19,3 +19,4 @@ http://www.windowswally.com/speed-up-windows-using-registry/
 https://stackoverflow.com/questions/48527499/using-wmic-in-a-batch-file-to-uninstall-a-program
 https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
 https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
+https://superuser.com/questions/868340/how-can-i-convert-a-windows-batch-script-to-a-exe
