@@ -2,7 +2,7 @@
 :prg
 
 color f0
-set ver=r6
+set ver=r6.1
 
 Title Performance Booster %ver%
 mode con: cols=62 lines=25
@@ -43,7 +43,7 @@ REM --> Start Start
     :startup
         echo Preparing variables needed...
         REM --> Directories
-        set PBdir=%HOMEDRIVE%%HOMEPATH%\PB
+        set PBdir=%WINDIR%\PB
         set Dsktp=%USERPROFILE%\Desktop
         set strtup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
         set pb=%PBdir%\PB.bat
@@ -385,6 +385,7 @@ REM --> Redirectors Start
             rd /q "%regbup%"
             rd /q "%regdir%"
             rd /q "%fdir%"
+            rd /q "%cddir%"
             rd /q "%rdir%"
             rd /q "%PBdir%"
             exit
