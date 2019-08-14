@@ -1,73 +1,96 @@
 @echo off
-
-set ver=r5
-
-Title Performance Booster %ver%
-mode con: cols=62 lines=16
-
 :prg
 
-:BatchGotAdmin
-:-------------------------------------
-REM  --> Check for permissions
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+color f0
+set ver=r6
 
-REM --> If error flag set, we do not have admin.
-if '%errorlevel%' NEQ '0' (
-    echo Requesting administrative privileges...
-    goto UACPrompt
-) else ( goto gotAdmin )
+Title Performance Booster %ver%
+mode con: cols=62 lines=25
 
-:UACPrompt
-    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
-    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
+:: BatchGotAdmin
+    :-------------------------------------
+    REM  --> Check for permissions
+    >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
-    "%temp%\getadmin.vbs"
-    exit /B
+    REM --> If error flag set, we do not have admin.
+    if '%errorlevel%' NEQ '0' (
+        echo Requesting administrative privileges...
+        goto UACPrompt
+    ) else ( goto gotAdmin )
 
-:gotAdmin
-    if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
-    pushd "%CD%"
-    CD /D "%~dp0"
-:--------------------------------------
+    :UACPrompt
+        echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+        echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
 
+        "%temp%\getadmin.vbs"
+        exit /B
 
-:strt1
+    :gotAdmin
+        if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
+        pushd "%CD%"
+        CD /D "%~dp0"
+    :--------------------------------------
+:: BatchGotAdminX
+
 REM --> Start Start
 
-:startup
-    echo Preparing variables needed...
-    REM --> Directories
-    set PBdir=%HOMEDRIVE%%HOMEPATH%\PB
-    set Dsktp=%USERPROFILE%\Desktop
-    set strtup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
-    set pb=%PBdir%\PB.bat
-    set fdir=%PBdir%\fcleaner
-    set rdir=%PBdir%\ram
-    set regdir=%PBdir%\reg
-    set regbup=%regdir%\backups
+    echo --------------------------------------------------------------
+    echo --------------------------------------------------------------
+    echo                         Please wait...
+    echo --------------------------------------------------------------
+    echo --------------------------------------------------------------
 
-    goto dircheck
+    :startup
+        echo Preparing variables needed...
+        REM --> Directories
+        set PBdir=%HOMEDRIVE%%HOMEPATH%\PB
+        set Dsktp=%USERPROFILE%\Desktop
+        set strtup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
+        set pb=%PBdir%\PB.bat
 
-:dircheck
-    echo Creating program directories...
-    if not exist "%PBdir%" (
-        md "%PBdir%"
-    )
-    if not exist "%fdir%" (
-        md "%fdir%"
-    )
-    if not exist "%rdir%" (
-        md "%rdir%"
-    )
-    if not exist "%regdir%" (
-        md "%regdir%"
-    )
-    if not exist "%regbup%" (
-        md "%regbup%"
-    )
+        set fdir=%PBdir%\fcleaner
+        set rdir=%PBdir%\ram
+        set cddir=%PBdir%\chkdsk
+        set regdir=%PBdir%\reg
+        set regbup=%regdir%\backups
 
-:start
+        goto dircheck
+
+    :dircheck
+        echo Creating program directories...
+        if not exist "%PBdir%" (
+            md "%PBdir%"
+        )
+        if not exist "%fdir%" (
+            md "%fdir%"
+        )
+        if not exist "%rdir%" (
+            md "%rdir%"
+        )
+        if not exist "%cddir%" (
+            md "%cddir%"
+        )
+        if not exist "%regdir%" (
+            md "%regdir%"
+        )
+        if not exist "%regbup%" (
+            md "%regbup%"
+        )
+
+        goto start
+
+    :start
+        echo Setting program environment...
+    REM --> Program props
+        set m1=1. Files Cleaner
+        set m2=2. RAM Cleaner
+        set m3=3. Registry Patcher
+        set m4=4. Main Disk Checker and Fixer
+        set m5=5. DNS Configurator
+        set m6=6. Remove bloatwares
+        set on=!
+        set off=#
+
     REM --> Copy program
         copy PB.bat "%pb%" >nul
 
@@ -117,6 +140,12 @@ REM --> Start Start
         set rt2=%rdir%\rt.2
         set rt3=%rdir%\rt.3
 
+    REM --> DSKCHK
+        set cdonly=chkonly.bat
+        set cdoboot=%strtup%\%cdonly%
+        set cdf=chkf.bat
+        set cdfboot=%strtup%\%cdf%
+
     REM --> REMBLT
         set bltlist=removedbltwrs.txt
         set PBblt=%PBdir%\%bltlist%
@@ -153,11 +182,11 @@ REM --> Menu Start
     
     :MMenu
         cls
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
+        echo --------------------------------------------------------------
         echo                         Please wait...
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
+        echo --------------------------------------------------------------
         start "" "%pb%"
         PING -n 3 127.0.0.1>nul
         exit 
@@ -166,20 +195,38 @@ REM --> Menu Start
         cd %PBdir%
         cls
         color f1
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
         echo                     Performance Booster
         echo                            %ver%
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        echo 1. Files Cleaner
-        echo 2. RAM Cleaner
-        echo 3. Registry Patcher
-        echo 4. Disk Checker and Fixer
-        echo 5. DNS Configurator
-        echo 6. Remove bloatwares
-        echo 0. Exit
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        echo          !Do not press enter without putting a value!
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
+        echo %on% = Enabled / Executed
+        echo %off% = Disabled / Not Executed
+        echo --------------------------------------------------------------
+
+        :fchk
+        goto fccheckm
+
+        :rchk
+        goto ramcheckm
+
+        :regchk
+        goto regcheckm
+
+        :dchk
+        goto diskcheckm
+
+        :dschk
+        goto dnscheckm
+
+        :rbchk
+        goto bltchkm
+
+        :mcon
+        echo 0. Clean and Exit
+        echo --------------------------------------------------------------
+        echo         !Do not press enter without putting a value!
+        echo    !Do not close the window using the one on the top right!
+        echo --------------------------------------------------------------
         set /p mm=Please enter the number of choice then press ENTER:
         
         If %mm%==0 (
@@ -206,6 +253,79 @@ REM --> Menu Start
                 PING -n 3 127.0.0.1>nul
                 goto MMenu 
         )))))))
+    
+    :fccheckm
+        if exist "%c1%" (
+            echo %m1% %on%
+            goto rchk
+        ) else (
+        if exist "%c2%" (
+            echo %m1% %on%
+            goto rchk
+        ) else (
+        if exist "%c3%" (
+            echo %m1% %on%
+            goto rchk
+        ) else ( 
+            echo %m1% %off%
+            goto rchk
+        )))
+    
+    :ramcheckm
+        if exist "%ron%" (
+            echo %m2% %on%
+            goto regchk
+        ) else ( 
+            echo %m2% %off%
+            goto regchk
+        )
+
+    :regcheckm
+        if exist "%rp1%" (
+            echo %m3% %on%
+            goto dchk
+        ) else (
+        if exist "%rp2%" (
+            echo %m3% %on%
+            goto dchk
+        ) else (
+        if exist "%rp3%" (
+            echo %m3% %on%
+            goto dchk
+        ) else ( 
+            echo %m3% %off%
+            goto dchk
+        )))
+
+    :diskcheckm
+        if exist "%cdoboot%" (
+            echo %m4% %on% at boot
+            goto dschk
+        ) else (
+        if exist "%cdfboot%" (
+            echo %m4% %on% at boot
+            goto dschk
+        ) else ( 
+            echo %m4% %off%
+            goto dschk
+        ))
+
+    :dnscheckm
+        echo %m5% %off%
+        goto rbchk
+    
+    :bltchkm
+        if exist "%PBblt%" (
+            echo %m6% %on%
+            goto mcon
+        ) else ( 
+            echo %m6% %off%
+            goto mcon
+        )
+
+REM --> Menu End
+
+REM --> Redirectors Start
 
     :cln
         cls
@@ -225,19 +345,15 @@ REM --> Menu Start
 
     :dskchk
         cls
-        color f5
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        echo                  Checking disks for errors...
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        PING -n 3 127.0.0.1>nul
-        goto MMenu
+        cd %cddir%
+        goto chkdskx
 
     :dnsc
         cls
         color f0
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
         echo              Do you want to change dns settings?
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
         set /p dnsc=Yes(1) or No(0)?
 
         If %dnsc%==1 (
@@ -258,10 +374,10 @@ REM --> Menu Start
 
     :x
         cls
-        color 70
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        color f0
+        echo --------------------------------------------------------------
         echo              Are you sure to close the program?
-        echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        echo --------------------------------------------------------------
         set /p close=Yes(1) or No(0)?
         
         If %close%==1 (
@@ -277,12 +393,12 @@ REM --> Menu Start
             goto MMenu
         ) else ( echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
-                goto x 
+                goto x
         ))
 
-REM --> Menu End
+REM --> Redirectors End
 
-REM --> MODULES Start
+REM --> Modules Start
 
     REM --> FCLEAN Start
 
@@ -311,29 +427,32 @@ REM --> MODULES Start
             cls
             echo 1 >fc_on
             color f2    
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo                     File Cleaner Disabler
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            if exist "%c1%" echo 1. Disable 1st cleaner
-            if exist "%c2%" echo 2. Disable 2nd cleaner
-            if exist "%c3%" echo 3. Disable 3rd cleaner
+            echo --------------------------------------------------------------
+            if exist "%c1%" echo 1. Disable 1st preset
+            if exist "%c2%" echo 2. Disable 2nd preset
+            if exist "%c3%" echo 3. Disable 3rd preset
             echo 4. Enable cleaners
             echo 0. Go back to main menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p ecln=Enter the number of choice:
 
             If %ecln%==1 (
                 echo Disabling 1st cleaner...
+                if not exist "%c1%" goto ecrong
                 PING -n 3 127.0.0.1>nul
                 goto fd1
             ) else (
             If %ecln%==2 (
                 echo Disabling 2nd cleaner...
+                if not exist "%c2%" goto ecrong
                 PING -n 3 127.0.0.1>nul
                 goto fd2
             ) else (
             If %ecln%==3 (
                 echo Disabling 3rd cleaner...
+                if not exist "%c3%" goto ecrong
                 PING -n 3 127.0.0.1>nul
                 goto fd3
             ) else (
@@ -345,9 +464,11 @@ REM --> MODULES Start
             If %ecln%==0 (
                 echo Skipped cleaner...
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto fcexist
+            ) else ( 
+                :ecrong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto fcexist
             )))))
 
             :fd1
@@ -375,32 +496,35 @@ REM --> MODULES Start
         :fc1
             cls
             color f2    
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo                    What cleaner to enable?
             echo       ! The cleaners will clean your files at startup !
             echo ! The cleaners will save your settings even after disabling !
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            if not exist "%c1%" echo 1. Cleaner 1
-            if not exist "%c2%" echo 2. Cleaner 2
-            if not exist "%c3%" echo 3. Cleaner 3
+            echo --------------------------------------------------------------
+            if not exist "%c1%" echo 1. Cleaner Preset 1
+            if not exist "%c2%" echo 2. Cleaner Preset 2
+            if not exist "%c3%" echo 3. Cleaner Preset 3
             echo 4. Disable cleaners
             echo 0. Go back to main menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p cln=Enter the number of choice:
 
             If %cln%==1 (
+                if exist "%c1%" goto crong
                 echo Enabling 1st cleaner...
                 if not exist "%fcon%" echo 1 >fc_on
                 PING -n 3 127.0.0.1>nul
                 goto fcln1
             ) else (
             If %cln%==2 (
+                if exist "%c2%" goto crong
                 echo Enabling 2nd cleaner...
                 if not exist "%fcon%" echo 1 >fc_on
                 PING -n 3 127.0.0.1>nul
                 goto fcln2
             ) else (
             If %cln%==3 (
+                if exist "%c3%" goto crong
                 echo Enabling 3rd cleaner...
                 if not exist "%fcon%" echo 1 >fc_on
                 PING -n 3 127.0.0.1>nul
@@ -414,43 +538,60 @@ REM --> MODULES Start
             If %cln%==0 (
                 echo Skipped cleaner...
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto fc1
+            ) else ( 
+                :crong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto fc1
             )))))
 
             :fcln1
                 echo 1 >c.1
-                cleanmgr /sageset:91
-                cleanmgr /sagerun:91
-                ( 
-                    echo @echo off
-                    echo ^cleanmgr /sagerun:91
-                ) >fclean1.bat
-                copy /y "%fbat1%" "%strtup%"
-                goto fclna
+                set sgset=sageset:91
+                set sgrun=sagerun:91
+                set fname=fclean1.bat
+                set fbat=%fdir%\fclean1.bat
+                goto fclnx
 
             :fcln2
                 echo 1 >c.2
-                cleanmgr /sageset:92
-                cleanmgr /sagerun:92
-                ( 
-                    echo @echo off
-                    echo ^cleanmgr /sagerun:92
-                ) >fclean2.bat
-                copy /y "%fbat2%" "%strtup%"
-                goto fclna
+                set sgset=sageset:92
+                set sgrun=sagerun:92
+                set fname=fclean2.bat
+                set fbat=%fdir%\fclean2.bat
+                goto fclnx
 
             :fcln3
                 echo 1 >c.3
-                cleanmgr /sageset:93
-                cleanmgr /sagerun:93
+                set sgset=sageset:93
+                set sgrun=sagerun:93
+                set fname=fclean3.bat
+                set fbat=%fdir%\fclean3.bat
+                goto fclnx
+
+            :fclnx
+                cleanmgr /%sgset%
                 ( 
                     echo @echo off
-                    echo ^cleanmgr /sagerun:93
-                ) >fclean3.bat
-                copy /y "%fbat3%" "%strtup%"
-                goto fclna
+                    echo ^cleanmgr /%sgset%
+                ) >%fname%
+                copy /y "%fbat%" "%strtup%"
+                
+                echo --------------------------------------------------------------
+                echo Do you want to run it now?
+                echo --------------------------------------------------------------
+                set /p sgx=Yes(1) or No(0)?
+
+                If %sgx%==1 (
+                    cleanmgr /%sgrun%
+                    goto fclna
+                ) else (
+                If %sgx%==0 (
+                    goto fclna
+                ) else ( echo Unknown value input! Please retry
+                        PING -n 3 127.0.0.1>nul
+                        goto fclnx
+                ))
 
             :fclna
                 echo Successful! Going back to main menu...
@@ -459,6 +600,151 @@ REM --> MODULES Start
                 
 
     REM --> FCLEAN End
+
+    REM --> RAMOPS Start
+
+        :ramcheck
+            echo Checking if RAM Optimizer is already enabled...
+            PING -n 6 127.0.0.1>nul
+            if exist "%ron%" goto ramexist
+            if not exist "%ron%" goto ram1
+
+        :ramexist
+            color f3
+            echo --------------------------------------------------------------
+            REM --> for rcls
+            if exist "%rc1%" echo RamOps enabled for 512MB RAM
+            if exist "%rc2%" echo RamOps enabled for 1GB RAM
+            if exist "%rc3%" echo RamOps enabled for 2GB RAM
+            if exist "%rc4%" echo RamOps enabled for 4GB+ RAM
+            REM --> for rte
+            if exist "%rt1%" echo RamOps scheduled every 1 hour
+            if exist "%rt2%" echo RamOps scheduled every 3 hours
+            if exist "%rt3%" echo RamOps scheduled every 5 hours
+            echo --------------------------------------------------------------
+
+            echo --------------------------------------------------------------
+            echo        Do you want to change or disable RAM Optimizer?
+            echo --------------------------------------------------------------
+            set /p ram=Change(1), Disable(2) or Cancel(0)?
+            
+            If %ram%==1 (
+                schtasks /delete /tn "RAM Optimizer" /f
+                del /f /q *
+                goto rclean
+            ) else (
+            If %ram%==2 (
+                schtasks /delete /tn "RAM Optimizer" /f
+                del /f /q *
+                echo Successful! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else (
+            If %ram%==0 (
+                goto MMenu
+            ) else ( echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto ramexist
+            )))
+
+        :ram1
+            cls
+            color f3
+            echo --------------------------------------------------------------
+            echo             Do you want to enable RAM Optimizer?
+            echo --------------------------------------------------------------
+            set /p ram=Yes(1) or No(0)?
+
+            If %ram%==1 (
+                goto rclean
+            ) else (
+            If %ram%==0 (
+                goto MMenu
+            ) else ( echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto ram 
+            ))
+
+        :rclean
+            cls
+            echo --------------------------------------------------------------
+            echo                   How much RAM do you have?
+            echo --------------------------------------------------------------
+            set /p rcln= 512MB (1), 1GB (2), 2GB (3), or 4GB+ (4) (0 to cancel)?
+            
+            If %rcln%==1 (
+                set rm=51200000
+                echo Setting .vbs script for 512MB RAM...
+                goto rtime
+            ) else (
+            If %rcln%==2 (
+                set rm=102400000
+                echo Setting .vbs script for 1GB RAM...
+                goto rtime
+            ) else (
+            If %rcln%==3 (
+                set rm=204800000
+                echo Setting .vbs script for 2GB RAM...
+                goto rtime
+            ) else (
+            If %rcln%==4 (
+                set rm=409600000
+                echo Setting .vbs script for 4GB+ RAM...
+                goto rtime
+            ) else (
+            If %rcln%==0 (
+                echo Going back to menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto rclean
+            )))))
+
+        :rtime
+            echo --------------------------------------------------------------
+            echo       How often do you want to execute the optimizer?
+            echo --------------------------------------------------------------
+            set /p rtx= Every 1 Hour (1), 3 Hours (2), or 5 Hours (3) (0 to go back)?
+            
+            If %rtx%==1 (
+                set rtm=1
+                echo Scheduling the task every 1 Hours...
+                PING -n 3 127.0.0.1>nul
+                goto rexecute
+            ) else (
+            If %rtx%==2 (
+                set rtm=3
+                echo Scheduling the task every 3 Hours...
+                PING -n 3 127.0.0.1>nul
+                goto rexecute
+            ) else (
+            If %rtx%==3 (
+                set rtm=5
+                echo Scheduling the task every 5 Hours...
+                PING -n 3 127.0.0.1>nul
+                goto rexecute
+            ) else (
+            If %rtx%==0 (
+                echo Going back...
+                PING -n 3 127.0.0.1>nul
+                goto rclean
+            ) else ( echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto rtime
+            ))))
+
+        :rexecute
+            echo FreeMem=Space(%rm%) >rboost.vbs
+            schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc hourly 
+            echo boostrm=%rcln% >rc.%rcln%
+            echo boosttime=%rtx% >rt.%rtx%
+            echo nul >r_on
+            echo Successful! Going back to menu...
+            PING -n 3 127.0.0.1>nul
+            goto MMenu
+
+    REM --> RAMOPS End
 
     REM --> REGEDIT Start
 
@@ -481,13 +767,13 @@ REM --> MODULES Start
             cls
             echo 1 >reg_on
             color f3
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo      Do you want to restore or modify the registry edits?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo 1. Restore
             echo 2. Modify
             echo 0. Go back to menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p resreg=Enter the number of choice:
 
             If %resreg%==1 (
@@ -508,41 +794,48 @@ REM --> MODULES Start
         :regresmenu
             cls
             color f3
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo                      Registry Restore Menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            PING -n 3 127.0.0.1>nul
+            echo --------------------------------------------------------------
             if exist "%rp1%" echo 1. Start-up programs
             if exist "%rp2%" echo 2. Desktop
             if exist "%rp3%" echo 3. Explorer
             if exist "%regon%" echo 4. Restore All
             echo 0. Back to menu...
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p resrm=Enter the number of choice:
 
             If %resrm%==1 (
                 set rall=0
+                if not exist "%rp1%" goto resong
                 goto resrm1
             ) else (
             If %resrm%==2 (
                 set rall=0
+                if not exist "%rp2%" goto resong
                 goto resrm2
             ) else (
             If %resrm%==3 (
                 set rall=0
+                if not exist "%rp3%" goto resong
                 goto resrm3
             ) else (
             If %resrm%==4 (
                 set rall=1
-                goto rconfirm
+                if exist "%rp1%" goto rconfirm
+                if exist "%rp2%" goto rconfirm
+                if exist "%rp3%" goto rconfirm
+                goto resong
             ) else (
             If %resrm%==0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regexist
+            ) else ( 
+                :resong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regexist
             )))))
 
             :resrm1
@@ -591,7 +884,6 @@ REM --> MODULES Start
             
             :resregcheck
                 if exist "%regon%" del "%regon%"
-                echo Checking if Registry Patches are already installed...
                 PING -n 3 127.0.0.1>nul
                 if exist "%rp1%" (
                     goto regresmenu
@@ -606,9 +898,9 @@ REM --> MODULES Start
 
         :reg1
             color f4
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo             Do you want to apply Registry Patches?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rgp=Yes(1) or No(0)?
 
             If %rgp%==1 (
@@ -624,40 +916,35 @@ REM --> MODULES Start
         :regmenu
             cls
             color f5
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo                     Registry Patcher Menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            PING -n 3 127.0.0.1>nul
+            echo --------------------------------------------------------------
             if not exist "%rp1%" echo 1. Disable all Start-up programs
             if not exist "%rp2%" echo 2. Make desktop faster
             if not exist "%rp3%" echo 3. Make explorer faster
             if not exist "%regon%" echo 4. Patch all
             echo 0. Go back to main menu
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo                 !NOTE: Reboot after applying!
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rmm=Enter the number of choice:
 
             If %rmm%==1 (
-                PING -n 3 127.0.0.1>nul
                 set rmall=0
                 if exist "%rp1%" goto rong
                 goto regp1
             ) else (
             If %rmm%==2 (
-                PING -n 3 127.0.0.1>nul
                 set rmall=0
                 if exist "%rp2%" goto rong
                 goto regp2
             ) else (
             If %rmm%==3 (
-                PING -n 3 127.0.0.1>nul
                 set rmall=0
                 if exist "%rp3%" goto rong
                 goto regp3
             ) else (
             If %rmm%==4 (
-                PING -n 3 127.0.0.1>nul
                 set rmall=1
                 goto regp1y
             ) else (
@@ -665,20 +952,17 @@ REM --> MODULES Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regmenu
+            ) else ( 
+                :rong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regmenu
             )))))
-        
-        :rong
-            echo Unknown value input! Please retry
-            PING -n 3 127.0.0.1>nul
-            goto regmenu
 
         :regp1 
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo         Do you want to disable all start-up programs?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rp1=Yes(1) or No(0)?
 
             If %rp1%==1 (
@@ -712,12 +996,12 @@ REM --> MODULES Start
             ))
         
         :regp2 
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo       Do you want to add tweaks to make desktop faster?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo    !This will put stricter restrictions to applications!
             echo              !and remove visual animations!
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rp2=Yes(1) or No(0)?
 
             If %rp2%==1 (
@@ -749,11 +1033,11 @@ REM --> MODULES Start
             ))
 
         :regp3
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo    Do you want to add tweaks to make file explorer faster?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo            !This will disable various properties!
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rp3=Yes(1) or No(0)?
 
             If %rp3%==1 (
@@ -783,150 +1067,186 @@ REM --> MODULES Start
 
     REM --> REGEDIT End       
 
-    REM --> RAMOPS Start
+    REM --> DSKCHK Start
 
-        :ramcheck
-            echo Checking if RAM Optimizer is already enabled...
-            PING -n 6 127.0.0.1>nul
-            if exist "%ron%" goto ramexist
-            if not exist "%ron%" goto ram1
+        :chkdskx
+            cls
+            color f5
+            echo --------------------------------------------------------------
+            echo             How do you wish to check main C: disk?
+            echo --------------------------------------------------------------
+            echo 1. Check only
+            echo 2. Check and fix 
+            if not exist "%cdoboot%" echo 3. Check at boot
+            if not exist "%cdfboot%" echo 4. Check and fix at boot
+            if exist "%cdoboot%" echo 5. Remove at boot batch files
+            if exist "%cdfboot%" echo 5. Remove at boot batch files
+            echo 0. Back to main menu
+            echo --------------------------------------------------------------
+            set /p chkx=Enter the number of choice:
 
-        :ramexist
-            color f3
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            REM --> for rcls
-            if exist "%rc1%" echo RamOps enabled for 512MB RAM
-            if exist "%rc2%" echo RamOps enabled for 1GB RAM
-            if exist "%rc3%" echo RamOps enabled for 2GB RAM
-            if exist "%rc4%" echo RamOps enabled for 4GB+ RAM
-            REM --> for rte
-            if exist "%rt1%" echo RamOps scheduled every 1 hour
-            if exist "%rt2%" echo RamOps scheduled every 3 hours
-            if exist "%rt3%" echo RamOps scheduled every 5 hours
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            echo        Do you want to change or disable RAM Optimizer?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            set /p ram=Change(1), Disable(2) or Cancel(0)?
-            
-            If %ram%==1 (
-                schtasks /delete /tn "RAM Optimizer" /f
-                del /f /q *
-                goto rclean
+            If %chkx%==1 (
+                goto chk1
             ) else (
-            If %ram%==2 (
-                schtasks /delete /tn "RAM Optimizer" /f
-                del /f /q *
-                echo Successful! Going back to MMenu...
+            If %chkx%==2 (
+                goto chk2
+            ) else (
+            If %chkx%==3 (
+                if exist "%cdoboot%" goto chrong
+                goto chk3
+            ) else (
+            If %chkx%==4 (
+                if exist "%cdfboot%" goto chrong
+                goto chk4
+            ) else (
+            If %chkx%==5 (
+                if not exist "%cdoboot%" goto chrong
+                if not exist "%cdfboot%" goto chrong
+                goto chk5
+            ) else (
+            If %chkx%==0 (
+                echo Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( 
+                :chrong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chkdskx
+            ))))))
+
+        :chk1
+            echo --------------------------------------------------------------
+            echo      Are you sure? This could take at least 10 minutes...
+            echo  The program will go back to main menu after checking disk
+            echo --------------------------------------------------------------
+            set /p rmv=Yes(1) or No(0)?
+
+            If %rmv%==1 (
+                echo Checking C: disk...
+                chkdsk C:
+                echo Done! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %ram%==0 (
+            If %rmv%==0 (
+                echo Going back to main menu...
+                PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto ramexist
-            )))
+                    goto chk1
+            ))
+        
+        :chk2
+            echo --------------------------------------------------------------
+            echo      Are you sure? This could take at least 15 minutes...
+            echo   The program will go back to main menu after the operation
+            echo --------------------------------------------------------------
+            set /p rmv=Yes(1) or No(0)?
 
-        :ram1
-            cls
-            color f3
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            echo             Do you want to enable RAM Optimizer?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            set /p ram=Yes(1) or No(0)?
-
-            If %ram%==1 (
-                goto rclean
+            If %rmv%==1 (
+                echo Checking and fixing C: disk...
+                chkdsk C: /f
+                echo Done! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
             ) else (
-            If %ram%==0 (
+            If %rmv%==0 (
+                echo Going back to main menu...
+                PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto ram 
+                    goto chk2
             ))
 
-        :rclean
-            cls
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            echo                   How much RAM do you have?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            set /p rcln= 512MB (1), 1GB (2), 2GB (3), or 4GB+ (4) (0 to cancel)?
-            
-            If %rcln%==1 (
-                set rm=51200000
-                echo Setting .vbs script for 512MB RAM...
-                goto rtime
+        :chk3
+            echo --------------------------------------------------------------
+            echo   This will create a bat file that will check disk at boot 
+            echo             ! Can be disabled after applying !
+            echo         ! This will remove check and fix at boot !
+            echo --------------------------------------------------------------
+            set /p rmv=Apply(1) or Go back to main menu(0)?
+
+            If %rmv%==1 (
+                echo Creating batch file...
+                (
+                    echo @echo off
+                    echo ^chkdsk C^:
+                ) >%cdonly%
+                copy %cdonly% "%cdoboot%"
+                del %cdonly%
+                if exist "%cdfboot%" del "%cdfboot%"
+                echo Done! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
             ) else (
-            If %rcln%==2 (
-                set rm=102400000
-                echo Setting .vbs script for 1GB RAM...
-                goto rtime
-            ) else (
-            If %rcln%==3 (
-                set rm=204800000
-                echo Setting .vbs script for 2GB RAM...
-                goto rtime
-            ) else (
-            If %rcln%==4 (
-                set rm=409600000
-                echo Setting .vbs script for 4GB+ RAM...
-                goto rtime
-            ) else (
-            If %rcln%==0 (
-                echo Going back to menu...
+            If %rmv%==0 (
+                echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto rclean
-            )))))
+                    goto chk3
+            ))
+        
+        :chk4
+            echo --------------------------------------------------------------
+            echo         This will create a bat file that will check 
+            echo                    and fix disk at boot
+            echo             ! Can be disabled after applying !
+            echo             ! This will remove check at boot !
+            echo --------------------------------------------------------------
+            set /p rmv=Apply(1) or Go back to main menu(0)?
 
-        :rtime
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            echo       How often do you want to execute the optimizer?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            set /p rtx= Every 1 Hour (1), 3 Hours (2), or 5 Hours (3) (0 to go back)?
-            
-            If %rtx%==1 (
-                set rtm=1
-                echo Scheduling the task every 1 Hours...
+            If %rmv%==1 (
+                echo Creating batch file...
+                (
+                    echo @echo off
+                    echo ^chkdsk C^: /f
+                ) >%cdf%
+                copy %cdf% "%cdfboot%"
+                del %cdf%
+                if exist "%cdoboot%" del "%cdoboot%"
+                echo Done! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
-                goto rexecute
+                goto MMenu
             ) else (
-            If %rtx%==2 (
-                set rtm=3
-                echo Scheduling the task every 3 Hours...
+            If %rmv%==0 (
+                echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx%==3 (
-                set rtm=5
-                echo Scheduling the task every 5 Hours...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx%==0 (
-                echo Going back...
-                PING -n 3 127.0.0.1>nul
-                goto rclean
+                goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto rtime
-            ))))
+                    goto chk4
+            ))
 
-        :rexecute
-            echo FreeMem=Space(%rm%) >rboost.vbs
-            schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc hourly 
-            echo boostrm=%rcln% >rc.%rcln%
-            echo boosttime=%rtx% >rt.%rtx%
-            echo nul >r_on
-            echo Successful! Going back to menu...
-            PING -n 3 127.0.0.1>nul
-            goto MMenu
+        :chk5
+            echo --------------------------------------------------------------
+            echo         This will remove the batch files that run 
+            echo                      chkdsk at boot
+            echo --------------------------------------------------------------
+            set /p rmv=Remove(1) or Go back to main menu(0)?
 
-    REM --> RAMOPS End
+            If %rmv%==1 (
+                echo Deleting batch files...
+                if exist "%cdoboot%" del "%cdoboot%"
+                if exist "%cdfboot%" del "%cdfboot%"
+                PING -n 3 127.0.0.1>nul
+                echo Done! Going back to main menu...
+                goto MMenu
+            ) else (
+            If %rmv%==0 (
+                echo Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto chk4
+            ))
+
+    REM --> DSKCHK End
 
     REM --> REMBLT Start
 
@@ -937,9 +1257,9 @@ REM --> MODULES Start
 
         :bltmenu
             echo ! Bloatwares had been previously removed !
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo               Do you want to remove them again?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p bltm=Yes(1) or No(0)?
 
             If %bltm%==1 (
@@ -958,9 +1278,9 @@ REM --> MODULES Start
 
         :blt1   
             color f1
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo  Do you want to remove pre-installed bloatware applications?
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rmv=Yes(1) or No(0)?
 
             If %rmv%==1 (
@@ -977,10 +1297,10 @@ REM --> MODULES Start
             ))
         
         :rmv1
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             echo      Are you sure? This could take at least 10 minutes...
             echo  The program will go back to main menu after uninstalling all
-            echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            echo --------------------------------------------------------------
             set /p rmv=Yes(1) or No(0)?
 
             If %rmv%==1 (
@@ -1104,14 +1424,6 @@ REM --> MODULES Start
         :bltchk
 
 REM --> Modules End
-
-REM --> ROLES
-
-REM --> @Ronwell Carl Langit and @Isma Garcia
-REM --> files cleaner, and disk checker and fixer
-
-REM --> @Luis Gabriel Palacios @Jude Mendoza Duqueza and @Mark Quinto 
-REM --> DNS Configurator and remove bloatwares
 
 REM --> End code
 goto prg
