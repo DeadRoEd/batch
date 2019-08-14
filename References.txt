@@ -18,3 +18,4 @@ https://superuser.com/questions/541534/check-whether-a-file-folder-exists-with-c
 http://www.windowswally.com/speed-up-windows-using-registry/
 https://stackoverflow.com/questions/48527499/using-wmic-in-a-batch-file-to-uninstall-a-program
 https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
+https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
