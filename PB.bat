@@ -1100,9 +1100,9 @@ REM --> Modules Start
                 goto chk4
             ) else (
             If %chkx%==5 (
-                if not exist "%cdoboot%" goto chrong
-                if not exist "%cdfboot%" goto chrong
-                goto chk5
+                if exist "%cdoboot%" goto chk5
+                if exist "%cdfboot%" goto chk5
+                goto chrong
             ) else (
             If %chkx%==0 (
                 echo Going back to main menu...
