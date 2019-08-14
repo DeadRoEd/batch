@@ -381,7 +381,7 @@ REM --> Redirectors Start
         set /p close=Yes(1) or No(0)?
         
         If %close%==1 (
-            del "%pb%"
+            del "%po%"
             rd /q "%regbup%"
             rd /q "%regdir%"
             rd /q "%fdir%"
