@@ -4,7 +4,7 @@
 color f0
 set ver=r6.1
 
-Title Performance Booster %ver%
+Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 :: BatchGotAdmin
@@ -43,23 +43,23 @@ REM --> Start Start
     :startup
         echo Preparing variables needed...
         REM --> Directories
-        set PBdir=%WINDIR%\PB
+        set POdir=%WINDIR%\PO
         set Dsktp=%USERPROFILE%\Desktop
         set strtup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
-        set pb=%PBdir%\PB.bat
+        set po=%POdir%\PO.bat
 
-        set fdir=%PBdir%\fcleaner
-        set rdir=%PBdir%\ram
-        set cddir=%PBdir%\chkdsk
-        set regdir=%PBdir%\reg
+        set fdir=%POdir%\fcleaner
+        set rdir=%POdir%\ram
+        set cddir=%POdir%\chkdsk
+        set regdir=%POdir%\reg
         set regbup=%regdir%\backups
 
         goto dircheck
 
     :dircheck
         echo Creating program directories...
-        if not exist "%PBdir%" (
-            md "%PBdir%"
+        if not exist "%POdir%" (
+            md "%POdir%"
         )
         if not exist "%fdir%" (
             md "%fdir%"
@@ -92,7 +92,7 @@ REM --> Start Start
         set off=#
 
     REM --> Copy program
-        copy PB.bat "%pb%" >nul
+        copy PO.bat "%po%" >nul
 
     REM --> FCLEAN
         set fcon=%fdir%\fc_on
@@ -148,7 +148,7 @@ REM --> Start Start
 
     REM --> REMBLT
         set bltlist=removedbltwrs.txt
-        set PBblt=%PBdir%\%bltlist%
+        set POblt=%POdir%\%bltlist%
         set b1="Cyberlink Media Suite"
         set b2="PowerDVD"
         set b3="Nero"
@@ -196,7 +196,7 @@ REM --> Menu Start
         cls
         color f1
         echo --------------------------------------------------------------
-        echo                     Performance Booster
+        echo                     Performance Optimizer
         echo                            %ver%
         echo --------------------------------------------------------------
         echo %on% = Enabled / Executed
@@ -387,7 +387,7 @@ REM --> Redirectors Start
             rd /q "%fdir%"
             rd /q "%cddir%"
             rd /q "%rdir%"
-            rd /q "%PBdir%"
+            rd /q "%POdir%"
             exit
         ) else (
         If %close%==0 (
