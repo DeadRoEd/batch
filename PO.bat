@@ -192,7 +192,7 @@ REM --> Menu Start
         exit 
 
     :MMenu2
-        cd %PBdir%
+        cd %POdir%
         cls
         color f1
         echo --------------------------------------------------------------
@@ -1247,6 +1247,7 @@ REM --> Modules Start
                 if exist "%cdfboot%" del "%cdfboot%"
                 PING -n 3 127.0.0.1>nul
                 echo Done! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
             If %rmv%==0 (
@@ -1264,8 +1265,8 @@ REM --> Modules Start
 
         :bltchk
             echo Checking if bloatwares was previously removed...
-            if exist "%PBblt%" goto bltmenu
-            if not exist "%PBblt%" goto blt1
+            if exist "%POblt%" goto bltmenu
+            if not exist "%POblt%" goto blt1
 
         :bltmenu
             cls
@@ -1277,7 +1278,7 @@ REM --> Modules Start
 
             If %bltm%==1 (
                 echo Proceeding to bloatware remover...
-                del "%PBblt%"
+                del "%POblt%"
                 PING -n 3 127.0.0.1>nul
                 goto rmv1
             ) else (
@@ -1357,7 +1358,7 @@ REM --> Modules Start
                 echo ^%b21%
                 echo ^%b22%
             ) >%bltlist%
-            copy %bltlist% "%PBblt%" >nul
+            copy %bltlist% "%POblt%" >nul
             PING -n 3 127.0.0.1>nul
 
         :bltchoice
@@ -1376,7 +1377,7 @@ REM --> Modules Start
             ))
 
         :bltwr0
-            del "%PBblt%"
+            del "%POblt%"
             echo Cancelled... Going back to main menu...
             PING -n 3 127.0.0.1>nul
             goto MMenu
@@ -1435,8 +1436,6 @@ REM --> Modules Start
             goto MMenu
 
     REM --> REMBLT End
-
-        :bltchk
 
 REM --> Modules End
 
