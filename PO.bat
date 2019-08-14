@@ -611,6 +611,7 @@ REM --> Modules Start
             if not exist "%ron%" goto ram1
 
         :ramexist
+            cls
             color f3
             echo --------------------------------------------------------------
             REM --> for rcls
@@ -703,6 +704,7 @@ REM --> Modules Start
             )))))
 
         :rtime
+            cls
             echo --------------------------------------------------------------
             echo       How often do you want to execute the optimizer?
             echo --------------------------------------------------------------
@@ -898,6 +900,7 @@ REM --> Modules Start
                 )))
 
         :reg1
+            cls
             color f4
             echo --------------------------------------------------------------
             echo             Do you want to apply Registry Patches?
@@ -961,6 +964,7 @@ REM --> Modules Start
             )))))
 
         :regp1 
+            cls
             echo --------------------------------------------------------------
             echo         Do you want to disable all start-up programs?
             echo --------------------------------------------------------------
@@ -997,6 +1001,7 @@ REM --> Modules Start
             ))
         
         :regp2 
+            cls
             echo --------------------------------------------------------------
             echo       Do you want to add tweaks to make desktop faster?
             echo --------------------------------------------------------------
@@ -1034,6 +1039,7 @@ REM --> Modules Start
             ))
 
         :regp3
+            cls
             echo --------------------------------------------------------------
             echo    Do you want to add tweaks to make file explorer faster?
             echo --------------------------------------------------------------
@@ -1117,6 +1123,7 @@ REM --> Modules Start
             ))))))
 
         :chk1
+            cls
             echo --------------------------------------------------------------
             echo      Are you sure? This could take at least 10 minutes...
             echo  The program will go back to main menu after checking disk
@@ -1140,6 +1147,7 @@ REM --> Modules Start
             ))
         
         :chk2
+            cls
             echo --------------------------------------------------------------
             echo      Are you sure? This could take at least 15 minutes...
             echo   The program will go back to main menu after the operation
@@ -1163,6 +1171,7 @@ REM --> Modules Start
             ))
 
         :chk3
+            cls
             echo --------------------------------------------------------------
             echo   This will create a bat file that will check disk at boot 
             echo             ! Can be disabled after applying !
@@ -1193,6 +1202,7 @@ REM --> Modules Start
             ))
         
         :chk4
+            cls
             echo --------------------------------------------------------------
             echo         This will create a bat file that will check 
             echo                    and fix disk at boot
@@ -1224,6 +1234,7 @@ REM --> Modules Start
             ))
 
         :chk5
+            cls
             echo --------------------------------------------------------------
             echo         This will remove the batch files that run 
             echo                      chkdsk at boot
@@ -1257,6 +1268,7 @@ REM --> Modules Start
             if not exist "%PBblt%" goto blt1
 
         :bltmenu
+            cls
             echo ! Bloatwares had been previously removed !
             echo --------------------------------------------------------------
             echo               Do you want to remove them again?
@@ -1278,6 +1290,7 @@ REM --> Modules Start
             ))
 
         :blt1   
+            cls
             color f1
             echo --------------------------------------------------------------
             echo  Do you want to remove pre-installed bloatware applications?
@@ -1298,6 +1311,7 @@ REM --> Modules Start
             ))
         
         :rmv1
+            cls
             echo --------------------------------------------------------------
             echo      Are you sure? This could take at least 10 minutes...
             echo  The program will go back to main menu after uninstalling all
