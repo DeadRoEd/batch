@@ -836,7 +836,7 @@ REM --> Modules Start
                 :resong
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
-                goto regexist
+                goto regresmenu
             )))))
 
             :resrm1
@@ -1244,7 +1244,7 @@ REM --> Modules Start
                 goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto chk4
+                    goto chk5
             ))
 
     REM --> DSKCHK End
@@ -1294,7 +1294,7 @@ REM --> Modules Start
                 goto MMenu
             ) else ( echo Unknown value input! Please retry
                     PING -n 3 127.0.0.1>nul
-                    goto bltmenu
+                    goto blt1
             ))
         
         :rmv1
