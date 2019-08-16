@@ -27,3 +27,4 @@ https://www.ssesetup.com/ezsignit.html
 https://sourceforge.net/projects/xca/
 https://www.sslmarket.co.uk/ssl/help-how-to-create-a-pfx-file/
 https://support.office.com/en-us/article/obtain-a-digital-certificate-and-create-a-digital-signature-e3d9d813-3305-4164-a820-2e063d86e512
+https://stackoverflow.com/questions/15358185/changing-publisher-information-for-a-exe-file
