@@ -23,3 +23,4 @@ https://superuser.com/questions/868340/how-can-i-convert-a-windows-batch-script-
 https://github.com/islamadel/bat2exe/
 https://www.flaticon.com/free-icon/seo-performance-graphic-in-a-circle_34136
 https://icoconvert.com/
+https://www.ssesetup.com/ezsignit.html
