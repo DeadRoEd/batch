@@ -20,3 +20,6 @@ https://stackoverflow.com/questions/48527499/using-wmic-in-a-batch-file-to-unins
 https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
 https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
 https://superuser.com/questions/868340/how-can-i-convert-a-windows-batch-script-to-a-exe
+https://github.com/islamadel/bat2exe/
+https://www.flaticon.com/free-icon/seo-performance-graphic-in-a-circle_34136
+https://icoconvert.com/
