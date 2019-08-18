@@ -1483,7 +1483,7 @@ set ver=r7.3
                 if exist "%d2on%" goto dnsrong
                 set dns=%dns2%
                 set dnss=%dns2s%
-                set dnsapp=%d1name%
+                set dnsapp=%d2name%
                 set dnsn=dns.2
                 goto dnsa
             ) else (
@@ -1491,7 +1491,7 @@ set ver=r7.3
                 if exist "%d3on%" goto dnsrong
                 set dns=%dns3%
                 set dnss=%dns3s%
-                set dnsapp=%d1name%
+                set dnsapp=%d3name%
                 set dnsn=dns.3
                 goto dnsa
             ) else (
@@ -1511,19 +1511,19 @@ set ver=r7.3
 
             :dnsa
                 echo Detecting if any dns is applied...
-                if exist "%dns1on%" (
+                if exist "%d1on%" (
                     echo Detected %d1name%! Resetting DNS patch...
-                    del "%dns1on%"
+                    del "%d1on%"
                     goto dnsa2
                 ) else (
-                if exist "%dns2on%" (
+                if exist "%d2on%" (
                     echo Detected %d2name%! Resetting DNS patch...
-                    del "%dns2on%"
+                    del "%d2on%"
                     goto dnsa2
                 ) else (
-                if exist "%dns3on%" (
+                if exist "%d3on%" (
                     echo Detected %d3name%! Resetting DNS patch...
-                    del "%dns3on%"
+                    del "%d3on%"
                     goto dnsa2
                 ) else (
                     echo No patch detected proceeding to patch...
