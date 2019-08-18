@@ -2,7 +2,7 @@
 :prg
 
 color f0
-set ver=r7
+set ver=r7.1
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -1442,6 +1442,28 @@ REM --> Modules Start
             )))))
 
             :dnsa
+                echo Detecting if any dns is applied...
+                if exist "%dns1on%" (
+                    echo Detected %d1name%! Resetting DNS patch...
+                    del "%dns1on%"
+                    goto dnsa2
+                ) else (
+                if exist "%dns2on%" (
+                    echo Detected %d2name%! Resetting DNS patch...
+                    del "%dns2on%"
+                    goto dnsa2
+                ) else (
+                if exist "%dns3on%" (
+                    echo Detected %d3name%! Resetting DNS patch...
+                    del "%dns3on%"
+                    goto dnsa2
+                ) else (
+                    echo No patch detected proceeding to patch...
+                    PING -n 3 127.0.0.1>nul
+                    goto dnsa2
+                )))
+
+            :dnsa2    
                 echo 1 >dns_on
                 echo 1 >%dnsn%
                 echo Applying %dnsapp% Patch...
