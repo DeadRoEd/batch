@@ -249,7 +249,6 @@ set ver=r7.3
         :mcon
         echo 0. Clean and Exit
         echo --------------------------------------------------------------
-        echo         !Do not press enter without putting a value!
         echo    !Do not close the window using the one on the top right!
         echo --------------------------------------------------------------
         set /p mm=Please enter the number of choice then press ENTER: 
@@ -1362,11 +1361,11 @@ set ver=r7.3
             ) else ( 
             If exist %d2on% (
                 set dnsname=%d2name%
-                set don=%d1on%
+                set don=%d2on%
             ) else ( 
             If exist %d3on% (
                 set dnsname=%d3name%
-                set don=%d1on%
+                set don=%d3on%
             ) else ( 
                 set dnsname=nul
                 set don=nul
