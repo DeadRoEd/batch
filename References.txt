@@ -19,11 +19,3 @@ http://www.windowswally.com/speed-up-windows-using-registry/
 https://stackoverflow.com/questions/48527499/using-wmic-in-a-batch-file-to-uninstall-a-program
 https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
 https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
-https://superuser.com/questions/868340/how-can-i-convert-a-windows-batch-script-to-a-exe
-https://github.com/islamadel/bat2exe/
-https://www.flaticon.com/free-icon/seo-performance-graphic-in-a-circle_34136
-https://icoconvert.com/
-https://www.ssesetup.com/ezsignit.html
-https://sourceforge.net/projects/xca/
-https://www.sslmarket.co.uk/ssl/help-how-to-create-a-pfx-file/
-https://support.office.com/en-us/article/obtain-a-digital-certificate-and-create-a-digital-signature-e3d9d813-3305-4164-a820-2e063d86e512
