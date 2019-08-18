@@ -2,10 +2,7 @@
 :prg
 
 color f0
-set ver=r6.1
-
-Title Performance Optimizer %ver%
-mode con: cols=62 lines=25
+set ver=r7
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -32,6 +29,9 @@ mode con: cols=62 lines=25
     :--------------------------------------
 :: BatchGotAdminX
 
+Title Performance Optimizer %ver%
+mode con: cols=62 lines=25
+
 REM --> Start Start
 
     echo --------------------------------------------------------------
@@ -53,6 +53,7 @@ REM --> Start Start
         set cddir=%POdir%\chkdsk
         set regdir=%POdir%\reg
         set regbup=%regdir%\backups
+        set dnsdir=%POdir%\dns
 
         goto dircheck
 
@@ -75,6 +76,9 @@ REM --> Start Start
         )
         if not exist "%regbup%" (
             md "%regbup%"
+        )
+        if not exist "%dnsdir%" (
+            md "%dnsdir%"
         )
 
         goto start
@@ -145,6 +149,21 @@ REM --> Start Start
         set cdoboot=%strtup%\%cdonly%
         set cdf=chkf.bat
         set cdfboot=%strtup%\%cdf%
+
+    REM --> DNS
+        set dnson=%dnsdir%\dns_on
+        set dns1=
+        set d1name=Google DNS
+        set dns1s=
+        set d1on=%dnsdir%\dns.1
+        set dns2=
+        set d2name=Open DNS
+        set dns2s=
+        set d2on=%dnsdir%\dns.2
+        set dns3=
+        set d3name=Something DNS
+        set dns3s=
+        set d3on=%dnsdir%\dns.3
 
     REM --> REMBLT
         set bltlist=removedbltwrs.txt
@@ -249,9 +268,11 @@ REM --> Menu Start
         ) else (
         If %mm%==6 (
             goto rmv
-        ) else ( echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto MMenu 
+        ) else ( 
+            :menurong
+            echo Unknown value input! Please retry
+            PING -n 3 127.0.0.1>nul
+            goto MMenu 
         )))))))
     
     :fccheckm
@@ -311,6 +332,14 @@ REM --> Menu Start
         ))
 
     :dnscheckm
+        if exist "%dnson%" (
+            echo %m5% %on%
+            goto rbchk
+        ) else (
+            echo %m5% %off%
+            goto rbchk
+        )
+
         echo %m5% %off%
         goto rbchk
     
@@ -350,22 +379,8 @@ REM --> Redirectors Start
 
     :dnsc
         cls
-        color f0
-        echo --------------------------------------------------------------
-        echo              Do you want to change dns settings?
-        echo --------------------------------------------------------------
-        set /p dnsc=Yes(1) or No(0)?
-
-        If %dnsc%==1 (
-            PING -n 3 127.0.0.1>nul
-            goto MMenu
-        ) else (
-        If %dnsc%==0 (
-            goto MMenu
-        ) else ( echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto dnsc 
-        ))
+        cd %dnsdir%
+        goto dnschk
 
     :rmv
         cls
@@ -382,6 +397,7 @@ REM --> Redirectors Start
         
         If %close%==1 (
             del "%po%"
+            rd /q "%dnsdir%"
             rd /q "%regbup%"
             rd /q "%regdir%"
             rd /q "%fdir%"
@@ -392,9 +408,10 @@ REM --> Redirectors Start
         ) else (
         If %close%==0 (
             goto MMenu
-        ) else ( echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto x
+        ) else ( 
+            echo Unknown value input! Please retry
+            PING -n 3 127.0.0.1>nul
+            goto x
         ))
 
 REM --> Redirectors End
@@ -421,7 +438,8 @@ REM --> Modules Start
                 echo 3rd cleaner exists!
                 PING -n 3 127.0.0.1>nul
                 goto fcexist
-            ) else ( goto fc1
+            ) else ( 
+                goto fc1
             )))
         
         :fcexist
@@ -574,7 +592,7 @@ REM --> Modules Start
                 cleanmgr /%sgset%
                 ( 
                     echo @echo off
-                    echo ^cleanmgr /%sgset%
+                    echo ^cleanmgr /%sgrun%
                 ) >%fname%
                 copy /y "%fbat%" "%strtup%"
                 
@@ -589,9 +607,10 @@ REM --> Modules Start
                 ) else (
                 If %sgx%==0 (
                     goto fclna
-                ) else ( echo Unknown value input! Please retry
-                        PING -n 3 127.0.0.1>nul
-                        goto fclnx
+                ) else ( 
+                    echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto fclnx
                 ))
 
             :fclna
@@ -644,9 +663,10 @@ REM --> Modules Start
             ) else (
             If %ram%==0 (
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto ramexist
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto ramexist
             )))
 
         :ram1
@@ -662,9 +682,10 @@ REM --> Modules Start
             ) else (
             If %ram%==0 (
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto ram 
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto ram 
             ))
 
         :rclean
@@ -698,9 +719,10 @@ REM --> Modules Start
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto rclean
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto rclean
             )))))
 
         :rtime
@@ -732,9 +754,10 @@ REM --> Modules Start
                 echo Going back...
                 PING -n 3 127.0.0.1>nul
                 goto rclean
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto rtime
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto rtime
             ))))
 
         :rexecute
@@ -742,7 +765,7 @@ REM --> Modules Start
             schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc hourly 
             echo boostrm=%rcln% >rc.%rcln%
             echo boosttime=%rtx% >rt.%rtx%
-            echo nul >r_on
+            echo 1 >r_on
             echo Successful! Going back to menu...
             PING -n 3 127.0.0.1>nul
             goto MMenu
@@ -763,7 +786,8 @@ REM --> Modules Start
             ) else (
             if exist "%rp3%" (
                 goto regexist
-            ) else ( goto reg1
+            ) else ( 
+                goto reg1
             )))
 
         :regexist
@@ -789,9 +813,10 @@ REM --> Modules Start
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regexist
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regexist
             )))
         
         :regresmenu
@@ -880,7 +905,8 @@ REM --> Modules Start
                     echo Successful! Now going back to main menu...
                     PING -n 3 127.0.0.1>nul 
                     goto MMenu
-                ) else ( echo Successful! Now going back to main menu...
+                ) else ( 
+                    echo Successful! Now going back to main menu...
                     PING -n 3 127.0.0.1>nul 
                     goto resregcheck
                 )
@@ -896,7 +922,8 @@ REM --> Modules Start
                 ) else (
                 if exist "%rp3%" (
                     goto regresmenu
-                ) else ( goto MMenu
+                ) else ( 
+                    goto MMenu
                 )))
 
         :reg1
@@ -912,9 +939,10 @@ REM --> Modules Start
             ) else (
             If %rgp%==0 (
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto reg1
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto reg1
             ))
 
         :regmenu
@@ -988,16 +1016,18 @@ REM --> Modules Start
                 PING -n 3 127.0.0.1>nul 
                 if %rmall%==1 (
                     goto regp2y
-                ) else ( goto MMenu
+                ) else ( 
+                    goto MMenu
                 )
             ) else (
             If %rp1%==0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regp1
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regp1
             ))
         
         :regp2 
@@ -1033,9 +1063,10 @@ REM --> Modules Start
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regp2
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regp2
             ))
 
         :regp3
@@ -1067,9 +1098,10 @@ REM --> Modules Start
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto regp3
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regp3
             ))
 
     REM --> REGEDIT End       
@@ -1141,9 +1173,10 @@ REM --> Modules Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto chk1
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chk1
             ))
         
         :chk2
@@ -1165,9 +1198,10 @@ REM --> Modules Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto chk2
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chk2
             ))
 
         :chk3
@@ -1196,9 +1230,10 @@ REM --> Modules Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto chk3
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chk3
             ))
         
         :chk4
@@ -1228,9 +1263,10 @@ REM --> Modules Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto chk4
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chk4
             ))
 
         :chk5
@@ -1254,12 +1290,167 @@ REM --> Modules Start
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto chk5
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto chk5
             ))
 
     REM --> DSKCHK End
+
+    REM --> DNS Start
+
+        :dnschk
+            If exist %d1on% (
+                set dnsname=%d1name%
+            ) else ( 
+            If exist %d2on% (
+                set dnsname=%d2name%
+            ) else ( 
+            If exist %d3on% (
+                set dnsname=%d3name%
+            ) else ( 
+                set dnsname=nul
+            )))
+            goto dnschk2
+
+        :dnschk2
+            echo Checking if dns is already patched...
+            if exist "%dnson%" goto dnstrue
+            if not exist "%dnson%" goto dnsfalse
+        
+        :dnstrue
+            cls
+            echo ! DNS has been patched !
+            echo --------------------------------------------------------------
+            echo          Do you wish to modify or remove the patch?
+            echo --------------------------------------------------------------
+            echo 1. Modify
+            echo 2. Remove
+            echo 0. Back to menu
+            set /p dnsx=Enter the number of choice:
+
+            If %dnsx%==1 (
+                goto dnsmenu
+            ) else (
+            If %dnsx%==2 (
+                goto dnsremenu
+            ) else (
+            If %dnsx%==0 (
+                echo Going back to menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto dnstrue
+            )))
+
+        :dnsremenu
+            cls
+            echo --------------------------------------------------------------
+            echo               Do you wish to disable %dnsname%?
+            echo --------------------------------------------------------------
+            set /p dnsr=Yes(1) or No(0)?
+
+            If %dnsr%==1 (
+                echo Removing DNS patch and restoring stock setting...
+                echo Successful! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else (
+            If %dnsr%==0 (
+                echo Going back to main menu...
+                goto MMenu
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto dnsremenu
+            ))
+        
+        :dnsfalse
+            cls
+            echo --------------------------------------------------------------
+            echo                   Do you wish to patch DNS?
+            echo --------------------------------------------------------------
+            set /p dnsr=Yes(1) or No(0)?
+
+            If %dnsr%==1 (
+                echo Proceeding to DNS Patch menu...
+                PING -n 3 127.0.0.1>nul
+                goto dnsmenu
+            ) else (
+            If %dnsr%==0 (
+                echo Going back to main menu...
+                goto MMenu
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto dns1
+            ))
+
+        :dnsmenu   
+            cls
+            color f3
+            echo --------------------------------------------------------------
+            echo                      DNS Patch Menu
+            echo --------------------------------------------------------------
+            if not exist "%d1on%" echo 1. %d1name%
+            if not exist "%d2on%" echo 2. %d2name%
+            if not exist "%d3on%" echo 3. %d3name%
+            if exist "%dnson%" echo 4. Disable %dnsname% Patch
+            echo 0. Back to menu...
+            echo --------------------------------------------------------------
+            set /p dnsp=Enter the number of choice:
+
+            If %dnsp%==1 (
+                if exist "%d1on%" goto dnsrong
+                set dns=%dns1%
+                set dnss=%dns1s%
+                set dnsapp=%d1name%
+                set dnsn=dns.1
+                goto dnsa
+            ) else (
+            If %dnsp%==2 (
+                if exist "%d2on%" goto dnsrong
+                set dns=%dns2%
+                set dnss=%dns2s%
+                set dnsapp=%d1name%
+                set dnsn=dns.2
+                goto dnsa
+            ) else (
+            If %dnsp%==3 (
+                if exist "%d3on%" goto dnsrong
+                set dns=%dns3%
+                set dnss=%dns3s%
+                set dnsapp=%d1name%
+                set dnsn=dns.3
+                goto dnsa
+            ) else (
+            If %dnsp%==4 (
+                goto dnsremenu
+            ) else (
+            If %dnsp%==0 (
+                echo Going back to menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( 
+                :dnsrong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto dnsmenu
+            )))))
+
+            :dnsa
+                echo 1 >dns_on
+                echo 1 >%dnsn%
+                echo Applying %dnsapp% Patch...
+                echo Successful! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+
+
+    REM --> DNS End
 
     REM --> REMBLT Start
 
@@ -1285,9 +1476,10 @@ REM --> Modules Start
             If %bltm%==0 (
                 echo Going back to main menu...
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto bltmenu
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto bltmenu
             ))
 
         :blt1   
@@ -1306,9 +1498,10 @@ REM --> Modules Start
             If %rmv%==0 (
                 echo Going back to main menu...
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto blt1
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto blt1
             ))
         
         :rmv1
@@ -1325,9 +1518,10 @@ REM --> Modules Start
             If %rmv%==0 (
                 echo Going back to main menu...
                 goto MMenu
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto rmv1
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto rmv1
             ))
 
         :rmx
@@ -1371,9 +1565,10 @@ REM --> Modules Start
             ) else (
             If %bltx%==0 (
                 goto bltwr0
-            ) else ( echo Unknown value input! Please retry
-                    PING -n 3 127.0.0.1>nul
-                    goto bltchoice
+            ) else ( 
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto bltchoice
             ))
 
         :bltwr0
