@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=r7.3
+set ver=v1
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -106,17 +106,15 @@ set ver=r7.3
 
     :: FCLEAN
         set fcon=%fdir%\fc_on
-        set fbat1=%fdir%\fclean1.bat
-        set fbat2=%fdir%\fclean2.bat
-        set fbat3=%fdir%\fclean3.bat
-        set fbatx1=%strtup%\fclean1.bat
-        set fbatx2=%strtup%\fclean2.bat
-        set fbatx3=%strtup%\fclean3.bat
+        set sgset=sageset:90
+        set sgrun=sagerun:90
+        set fname=fclean.bat
+        set fbat=%fdir%\fclean.bat
     :: FCLEAN check
-        set c1=%fdir%\c.1
-        set c2=%fdir%\c.2
-        set c3=%fdir%\c.3
-
+        set sched1=%fdir%\fsched.1
+        set sched2=%fdir%\fsched.2
+        set sched3=%fdir%\fsched.3
+        
     :: REGEDIT
         set regon=%regdir%\reg_on
         set rp1=%regdir%\rp.1
@@ -158,17 +156,17 @@ set ver=r7.3
 
     :: DNS
         set dnson=%dnsdir%\dns_on
-        set dns1=
-        set d1name=Google DNS
-        set dns1s=
+        set dns1=1.1.1.1
+        set d1name=Cloudflare DNS
+        set dns1s=1.0.0.1
         set d1on=%dnsdir%\dns.1
-        set dns2=
-        set d2name=Open DNS
-        set dns2s=
+        set dns2=8.8.8.8
+        set d2name=Google DNS
+        set dns2s=8.8.4.4
         set d2on=%dnsdir%\dns.2
-        set dns3=
-        set d3name=Something DNS
-        set dns3s=
+        set dns3=9.9.9.9
+        set d3name=Quad9 DNS
+        set dns3s=149.112.112.112
         set d3on=%dnsdir%\dns.3
 
     :: REMBLT
@@ -222,7 +220,8 @@ set ver=r7.3
         color f1
         echo --------------------------------------------------------------
         echo                     Performance Optimizer
-        echo                            %ver%
+        echo --------------------------------------------------------------
+        echo Version: %ver%
         echo --------------------------------------------------------------
         echo %on% = Enabled / Executed
         echo %off% = Disabled / Not Executed
@@ -282,21 +281,14 @@ set ver=r7.3
         )))))))
     
     :fccheckm
-        if exist "%c1%" (
-            echo %m1% %on%
-            goto rchk
-        ) else (
-        if exist "%c2%" (
-            echo %m1% %on%
-            goto rchk
-        ) else (
-        if exist "%c3%" (
+        if exist "%fcon%" (
             echo %m1% %on%
             goto rchk
         ) else ( 
             echo %m1% %off%
             goto rchk
-        )))
+        )
+
     
     :ramcheckm
         if exist "%ron%" (
@@ -430,60 +422,34 @@ set ver=r7.3
         :fccheck
             echo Checking if file cleaners are already installed...
             PING -n 3 127.0.0.1>nul
-            if exist "%fcon%" del "%fcon%"
-            if exist "%c1%" (
-                echo 1st cleaner exists!
-                PING -n 3 127.0.0.1>nul
-                goto fcexist
-            ) else (
-            if exist "%c2%" (
-                echo 2nd cleaner exists!
-                PING -n 3 127.0.0.1>nul
-                goto fcexist
-            ) else (
-            if exist "%c3%" (
-                echo 3rd cleaner exists!
+            if exist "%fcon%" (
+                echo A cleaner exists!
                 PING -n 3 127.0.0.1>nul
                 goto fcexist
             ) else ( 
                 goto fc1
-            )))
+            )
         
         :fcexist
             cls
-            echo 1 >fc_on
             color f2    
             echo --------------------------------------------------------------
-            echo                     File Cleaner Disabler
+            echo                     File Cleaner Menu
             echo --------------------------------------------------------------
-            if exist "%c1%" echo 1. Disable 1st preset
-            if exist "%c2%" echo 2. Disable 2nd preset
-            if exist "%c3%" echo 3. Disable 3rd preset
-            echo 4. Enable cleaners
+            if exist "%fcon%" echo 1. Disable cleaner
+            echo 2. Modify
             echo 0. Go back to main menu
             echo --------------------------------------------------------------
             set /p ecln=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto ecrong
             If %ecln%==1 (
-                echo Disabling 1st cleaner...
-                if not exist "%c1%" goto ecrong
+                if not exist "%fcon%" goto ecrong
+                echo Disabling cleaner...
                 PING -n 3 127.0.0.1>nul
-                goto fd1
+                goto fd
             ) else (
             If %ecln%==2 (
-                echo Disabling 2nd cleaner...
-                if not exist "%c2%" goto ecrong
-                PING -n 3 127.0.0.1>nul
-                goto fd2
-            ) else (
-            If %ecln%==3 (
-                echo Disabling 3rd cleaner...
-                if not exist "%c3%" goto ecrong
-                PING -n 3 127.0.0.1>nul
-                goto fd3
-            ) else (
-            If %ecln%==4 (
                 echo Changing menu...
                 PING -n 3 127.0.0.1>nul
                 goto fc1
@@ -496,115 +462,155 @@ set ver=r7.3
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto fcexist
-            )))))
+            )))
 
-            :fd1
-                del "%c1%"
-                del "%fbat1%"
-                del "%fbatx1%"
-                goto fda
-            :fd2
-                del "%c2%"
-                del "%fbat2%"
-                del "%fbatx2%"
-                goto fda
-            :fd3
-                del "%c3%"
-                del "%fbat3%"
-                del "%fbatx3%"
+            :fd
+                schtasks /delete /tn "File Cleaner" /f
+                del /f /q *
                 goto fda
             :fda
                 echo Successful! Going back to main menu...
-                del "%fcon%"
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
                 
 
         :fc1
             cls
-            color f2    
+            color f3
             echo --------------------------------------------------------------
             echo                    What cleaner to enable?
-            echo       ! The cleaners will clean your files at startup !
             echo ! The cleaners will save your settings even after disabling !
             echo --------------------------------------------------------------
-            if not exist "%c1%" echo 1. Cleaner Preset 1
-            if not exist "%c2%" echo 2. Cleaner Preset 2
-            if not exist "%c3%" echo 3. Cleaner Preset 3
-            echo 4. Disable cleaners
+            echo Current Setting:
+            goto fschk
+            :fschkx
+            echo --------------------------------------------------------------            
+            echo 1. Set Cleaner Preset
+            echo 2. Run Cleaner Now
+            if exist "%fcon%" echo 3. Disable cleaner
             echo 0. Go back to main menu
             echo --------------------------------------------------------------
             set /p cln=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto crong
             If %cln%==1 (
-                if exist "%c1%" goto crong
-                echo Enabling 1st cleaner...
-                if not exist "%fcon%" echo 1 >fc_on
+                echo Setting cleaning preset...
                 PING -n 3 127.0.0.1>nul
-                goto fcln1
+                goto fclnx
             ) else (
             If %cln%==2 (
-                if exist "%c2%" goto crong
-                echo Enabling 2nd cleaner...
-                if not exist "%fcon%" echo 1 >fc_on
+                echo Running cleaner now...
                 PING -n 3 127.0.0.1>nul
-                goto fcln2
+                goto fcrun
             ) else (
             If %cln%==3 (
-                if exist "%c3%" goto crong
-                echo Enabling 3rd cleaner...
-                if not exist "%fcon%" echo 1 >fc_on
-                PING -n 3 127.0.0.1>nul
-                goto fcln3
-            ) else (
-            If %cln%==4 (
                 echo Changing menu...
                 PING -n 3 127.0.0.1>nul
                 goto fcexist
             ) else (
             If %cln%==0 (
-                echo Skipped cleaner...
+                echo Going back to main menu...
+                PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else ( 
                 :crong
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto fc1
-            )))))
+            ))))
 
-            :fcln1
-                echo 1 >c.1
-                set sgset=sageset:91
-                set sgrun=sagerun:91
-                set fname=fclean1.bat
-                set fbat=%fdir%\fclean1.bat
-                goto fclnx
-
-            :fcln2
-                echo 1 >c.2
-                set sgset=sageset:92
-                set sgrun=sagerun:92
-                set fname=fclean2.bat
-                set fbat=%fdir%\fclean2.bat
-                goto fclnx
-
-            :fcln3
-                echo 1 >c.3
-                set sgset=sageset:93
-                set sgrun=sagerun:93
-                set fname=fclean3.bat
-                set fbat=%fdir%\fclean3.bat
-                goto fclnx
+            :fschk
+                if exist "%fcon%" (
+                    echo ! Enabled !
+                    goto fschk2
+                ) else (
+                    echo ! Disabled !
+                    goto fschk2
+                )
+            
+            :fschk2
+                if exist "%sched1%" (
+                    echo ! Daily !
+                    goto fschkx
+                ) else (
+                if exist "%sched2%" (
+                    echo ! Weekly !
+                    goto fschkx
+                ) else (
+                if exist "%sched3%" (
+                    echo ! Monthly !
+                    goto fschkx
+                ) else (
+                    goto fschkx
+                )))
 
             :fclnx
+                cls
+                color f2    
+                echo --------------------------------------------------------------
+                echo          How often do you want the cleaner to be ran?
+                echo --------------------------------------------------------------
+                if not exist "%sched1%" echo 1. Daily
+                if not exist "%sched2%" echo 2. Weekly
+                if not exist "%sched3%" echo 3. Monthly
+                echo 4. Go back to cleaner menu
+                echo 0. Go back to main menu
+                echo --------------------------------------------------------------
+                set /p schx=Please enter the number of choice then press ENTER: 
+
+                If %errorlevel% equ 1 goto schrong
+                If %schx%==1 (
+                    If not exist "%fcon%" echo 1 >fc_on
+                    echo 1 >fsched.1
+                    set sched=daily
+                    echo Setting daily...
+                    PING -n 3 127.0.0.1>nul
+                    goto schedx
+                ) else (
+                If %schx%==2 (
+                    If not exist "%fcon%" echo 1 >fc_on
+                    echo 1 >fsched.2
+                    set sched=weekly
+                    echo Setting weekly...
+                    PING -n 3 127.0.0.1>nul
+                    goto schedx
+                ) else (
+                If %schx%==3 (
+                    If not exist "%fcon%" echo 1 >fc_on
+                    echo 1 >fsched.3
+                    set sched=monthly
+                    echo Setting monthly...
+                    PING -n 3 127.0.0.1>nul
+                    goto schedx
+                ) else (
+                If %schx%==4 (
+                    echo Going back to cleaner menu...
+                    PING -n 3 127.0.0.1>nul
+                    goto fc1
+                ) else ( 
+                If %schx%==0 (
+                    echo Going back to main menu...
+                    PING -n 3 127.0.0.1>nul
+                    goto MMenu
+                ) else ( 
+                    :schrong
+                    echo Unknown value input! Please retry
+                    PING -n 3 127.0.0.1>nul
+                    goto fclnx
+                )))))
+
+            :schedx
                 cleanmgr /%sgset%
-                ( 
+                (
                     echo @echo off
+                    echo File Cleaner created by Performance Optimizer
                     echo ^cleanmgr /%sgrun%
                 ) >%fname%
-                copy /y "%fbat%" "%strtup%"
+                schtasks /create /tn "File Cleaner" /tr "%fbat%" /sc "%sched%"
+                goto fclna               
                 
+            :fcrun 
+                cls
                 echo --------------------------------------------------------------
                 echo Do you want to run it now?
                 echo --------------------------------------------------------------
@@ -616,7 +622,9 @@ set ver=r7.3
                     goto fclna
                 ) else (
                 If %sgx%==0 (
-                    goto fclna
+                    echo Cancelled! Going back to menu...
+                    PING -n 3 127.0.0.1>nul
+                    goto fc1
                 ) else ( 
                     :fxrong
                     echo Unknown value input! Please retry
@@ -1266,6 +1274,8 @@ set ver=r7.3
                 echo Creating batch file...
                 (
                     echo @echo off
+                    echo Performance Optimizer:
+                    echo Scheduled Disk Checker
                     echo ^chkdsk C^:
                 ) >%cdonly%
                 copy %cdonly% "%cdoboot%"
@@ -1301,7 +1311,9 @@ set ver=r7.3
                 echo Creating batch file...
                 (
                     echo @echo off
-                    echo ^chkdsk C^: /f
+                    echo Performance Optimizer:
+                    echo Scheduled Disk Checker
+                    echo ^chkdsk C^:
                 ) >%cdf%
                 copy %cdf% "%cdfboot%"
                 del %cdf%
@@ -1390,7 +1402,7 @@ set ver=r7.3
 
             If %errorlevel% equ 1 goto dstrong
             If %dnsx%==1 (
-                goto dnsmenu
+                goto dnsfalse
             ) else (
             If %dnsx%==2 (
                 goto dnsremenu
@@ -1418,9 +1430,7 @@ set ver=r7.3
                 del "%dnson%"
                 del "%don%"
                 echo Removing DNS patch and restoring stock setting...
-                echo Successful! Going back to main menu...
-                PING -n 3 127.0.0.1>nul
-                goto MMenu
+                goto dnsdisable
             ) else (
             If %dnsr%==0 (
                 echo Going back to main menu...
@@ -1431,6 +1441,14 @@ set ver=r7.3
                 PING -n 3 127.0.0.1>nul
                 goto dnsremenu
             ))
+
+            :dnsdisable
+                :: Clean DNS Server
+                wmic nicconfig where (IPEnabled=TRUE) call SetDNSServerSearchOrder ()
+                ipconfig /flushdns
+                echo Successful! Going back to main menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
         
         :dnsfalse
             cls
@@ -1534,6 +1552,11 @@ set ver=r7.3
                 echo 1 >dns_on
                 echo 1 >%dnsn%
                 echo Applying %dnsapp% Patch...
+                :: Clean DNS Servers
+                wmic nicconfig where (IPEnabled=TRUE) call SetDNSServerSearchOrder ()
+                :: Apply DNS Servers
+                wmic nicconfig where (IPEnabled=TRUE) call SetDNSServerSearchOrder ("%dns%", "%dnss%")
+                ipconfig /flushdns
                 echo Successful! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
