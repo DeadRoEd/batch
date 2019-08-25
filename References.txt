@@ -17,6 +17,7 @@ https://stackoverflow.com/questions/132799/how-can-i-echo-a-newline-in-a-batch-f
 https://superuser.com/questions/541534/check-whether-a-file-folder-exists-with-cmd-command-line-not-batch-script/541536
 http://www.windowswally.com/speed-up-windows-using-registry/
 https://www.askvg.com/collection-of-registry-tweaks-for-windows-7/
+https://www.speedupnew.com/speed-up-pc/shutdown-tweak.html
 https://stackoverflow.com/questions/48527499/using-wmic-in-a-batch-file-to-uninstall-a-program
 https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
 https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
