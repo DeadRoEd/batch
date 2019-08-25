@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v1
+set ver=v1_r1
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -478,8 +478,8 @@ set ver=v1
             cls
             color f3
             echo --------------------------------------------------------------
-            echo                    What cleaner to enable?
-            echo ! The cleaners will save your settings even after disabling !
+            echo                      File Cleaner Menu
+            echo  ! The cleaner will save your settings even after disabling !
             echo --------------------------------------------------------------
             echo Current Setting:
             goto fschk
@@ -835,6 +835,11 @@ set ver=v1
             color f3
             echo --------------------------------------------------------------
             echo      Do you want to restore or modify the registry edits?
+            echo --------------------------------------------------------------
+            echo Registry Edits:
+            if exist "%rp1%" echo ! Start-up programs disabled ! 
+            if exist "%rp2%" echo ! Stricter app killing !
+            if exist "%rp3%" echo ! Disabled explorer features (faster) !
             echo --------------------------------------------------------------
             echo 1. Restore
             echo 2. Modify
@@ -1395,6 +1400,8 @@ set ver=v1
             echo --------------------------------------------------------------
             echo          Do you wish to modify or remove the patch?
             echo --------------------------------------------------------------
+            echo Enabled DNS Server: %dnsname%
+            echo --------------------------------------------------------------
             echo 1. Modify
             echo 2. Remove
             echo 0. Back to menu
@@ -1454,6 +1461,7 @@ set ver=v1
             cls
             echo --------------------------------------------------------------
             echo                   Do you wish to patch DNS?
+            echo          !Only patch when the computer is connected!
             echo --------------------------------------------------------------
             set /p dnsr=Type 1 if yes, 0 if no:
 
