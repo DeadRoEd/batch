@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v1_r1
+set ver=v1_r2
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -120,6 +120,7 @@ set ver=v1_r1
         set rp1=%regdir%\rp.1
         set rp2=%regdir%\rp.2
         set rp3=%regdir%\rp.3
+        set rp4=%regdir%\rp.4
     :: Local Machine
         set lmr=HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
         set lmo=HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
@@ -136,6 +137,9 @@ set ver=v1_r1
     :: Explorer
         set ex=HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
         set re1=%regbup%\ex.hiv
+    :: Memory Management
+        set mem=HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management
+        set ru1=%regbup%\mem.hiv
     
     :: RAMOPS
         set rvbs=%rdir%\rboost.vbs
@@ -248,7 +252,8 @@ set ver=v1_r1
         :mcon
         echo 0. Clean and Exit
         echo --------------------------------------------------------------
-        echo    !Do not close the window using the one on the top right!
+        echo   ! Do not close the window using the one on the top right !
+        echo   ! It is recommended to reboot for changes to take place !
         echo --------------------------------------------------------------
         set /p mm=Please enter the number of choice then press ENTER: 
         
@@ -312,9 +317,13 @@ set ver=v1_r1
             echo %m3% %on%
             goto dchk
         ) else ( 
+        if exist "%rp4%" (
+            echo %m3% %on%
+            goto dchk
+        ) else ( 
             echo %m3% %off%
             goto dchk
-        )))
+        ))))
 
     :diskcheckm
         if exist "%cdoboot%" (
@@ -826,8 +835,11 @@ set ver=v1_r1
             if exist "%rp3%" (
                 goto regexist
             ) else ( 
+            if exist "%rp4%" (
+                goto regexist
+            ) else ( 
                 goto reg1
-            )))
+            ))))
 
         :regexist
             cls
@@ -840,6 +852,7 @@ set ver=v1_r1
             if exist "%rp1%" echo ! Start-up programs disabled ! 
             if exist "%rp2%" echo ! Stricter app killing !
             if exist "%rp3%" echo ! Disabled explorer features (faster) !
+            if exist "%rp4%" echo ! Modified memory management !
             echo --------------------------------------------------------------
             echo 1. Restore
             echo 2. Modify
@@ -874,7 +887,8 @@ set ver=v1_r1
             if exist "%rp1%" echo 1. Start-up programs
             if exist "%rp2%" echo 2. Desktop
             if exist "%rp3%" echo 3. Explorer
-            if exist "%regon%" echo 4. Restore All
+            if exist "%rp4%" echo 4. Memory Management
+            if exist "%regon%" echo 5. Restore All
             echo 0. Back to menu...
             echo --------------------------------------------------------------
             set /p resrm=Please enter the number of choice then press ENTER: 
@@ -896,10 +910,16 @@ set ver=v1_r1
                 goto resrm3
             ) else (
             If %resrm%==4 (
+                set rall=0
+                if not exist "%rp4%" goto resong
+                goto resrm4
+            ) else (
+            If %resrm%==5 (
                 set rall=1
                 if exist "%rp1%" goto rconfirm
                 if exist "%rp2%" goto rconfirm
                 if exist "%rp3%" goto rconfirm
+                if exist "%rp4%" goto rconfirm
                 goto resong
             ) else (
             If %resrm%==0 (
@@ -911,7 +931,7 @@ set ver=v1_r1
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto regresmenu
-            )))))
+            ))))))
 
             :resrm1
                 reg restore "%lmr%" "%rd1%" 
@@ -940,6 +960,13 @@ set ver=v1_r1
                 del "%rp3%"
                 goto rconfirm
 
+            :resrm4
+                reg restore "%mem%" "%ru1%" 
+                PING -n 3 127.0.0.1>nul
+                del "%ru1%"
+                del "%rp4%"
+                goto rconfirm
+
             :rconfirm
                 if %rall%==1 (
                     if exist "%rp1%" goto resrm1
@@ -948,6 +975,8 @@ set ver=v1_r1
                     if not exist "%rp2%" echo Done!
                     if exist "%rp3%" goto resrm3
                     if not exist "%rp3%" echo Done!
+                    if exist "%rp4%" goto resrm4
+                    if not exist "%rp4%" echo Done!
                     if exist "%regon%" del "%regon%"
                     echo Successful! Now going back to main menu...
                     PING -n 3 127.0.0.1>nul 
@@ -970,8 +999,11 @@ set ver=v1_r1
                 if exist "%rp3%" (
                     goto regresmenu
                 ) else ( 
+                if exist "%rp4%" (
+                    goto regresmenu
+                ) else ( 
                     goto MMenu
-                ))
+                ))))
 
         :reg1
             cls
@@ -1003,7 +1035,8 @@ set ver=v1_r1
             if not exist "%rp1%" echo 1. Disable all Start-up programs
             if not exist "%rp2%" echo 2. Make desktop faster
             if not exist "%rp3%" echo 3. Make explorer faster
-            if not exist "%regon%" echo 4. Patch all
+            if not exist "%rp4%" echo 4. Modify Memory Management
+            if not exist "%regon%" echo 5. Patch all
             echo 0. Go back to main menu
             echo --------------------------------------------------------------
             echo                 !NOTE: Reboot after applying!
@@ -1027,6 +1060,11 @@ set ver=v1_r1
                 goto regp3
             ) else (
             If %rmm%==4 (
+                set rmall=0
+                if exist "%rp4%" goto rong
+                goto regp4
+            ) else (
+            If %rmm%==5 (
                 set rmall=1
                 goto regp1y
             ) else (
@@ -1039,7 +1077,7 @@ set ver=v1_r1
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto regmenu
-            )))))
+            ))))))
 
         :regp1 
             cls
@@ -1059,10 +1097,10 @@ set ver=v1_r1
                 reg save "%cur%" "%rd3%" /y
                 reg save "%cuo%" "%rd4%" /y
                 :: Deletion
-                reg delete "%lmr%" /f /va
-                reg delete "%lmo%" /f /va
-                reg delete "%cur%" /f /va
-                reg delete "%cuo%" /f /va
+                reg delete "%lmr%" /va /f
+                reg delete "%lmo%" /va /f
+                reg delete "%cur%" /va /f
+                reg delete "%cuo%" /va /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
                 if %rmall%==1 (
@@ -1087,8 +1125,8 @@ set ver=v1_r1
             echo --------------------------------------------------------------
             echo       Do you want to add tweaks to make desktop faster?
             echo --------------------------------------------------------------
-            echo    !This will put stricter restrictions to applications!
-            echo              !and remove visual animations!
+            echo    ! This will put stricter restrictions to applications !
+            echo              ! and reduce visual animations !
             echo --------------------------------------------------------------
             set /p rp2=Type 1 if yes, 0 if no:
 
@@ -1100,16 +1138,17 @@ set ver=v1_r1
                 :: Backup
                 reg save "%dt%" "%ra1%" /y
                 :: Addition
-                reg add "%dt%" /v AutoEndTasks /t REG_SZ /f /d 1
-                reg add "%dt%" /v HungAppTimeout /t REG_SZ /f /d 1000
-                reg add "%dt%" /v MenuShowDelay /t REG_SZ /f /d 8
-                reg add "%dt%" /v WaitToKillAppTimeout /t REG_SZ /f /d 2000
-                reg add "%dt%" /v LowLevelHooksTimeout /t REG_SZ /f /d 1000
+                reg add "%dt%" /v AutoEndTasks /t REG_SZ /d 1 /f
+                reg add "%dt%" /v HungAppTimeout /t REG_SZ /d 1000 /f
+                reg add "%dt%" /v MenuShowDelay /t REG_SZ /d 8 /f
+                reg add "%dt%" /v WaitToKillAppTimeout /t REG_SZ /d 10000 /f
+                reg add "%dt%" /v LowLevelHooksTimeout /t REG_SZ /d 1000 /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
                 if %rmall%==1 (
                     goto regp3y
-                ) else ( goto MMenu
+                ) else ( 
+                    goto MMenu
                 )
             ) else (
             If %rp2%==0 (
@@ -1140,13 +1179,18 @@ set ver=v1_r1
                 :: Backup
                 reg save "%ex%" "%re1%" /y
                 :: Addition
-                reg add "%ex%" /v NoLowDiskSpaceChecks /t REG_DWORD /f /d 1
-                reg add "%ex%" /v LinkResolveIgnoreLinkInfo /t REG_DWORD /f /d 1
-                reg add "%ex%" /v NoResolveSearch /t REG_DWORD /f /d 1
-                reg add "%ex%" /v NoResolveTrack /t REG_DWORD /f /d 1
-                reg add "%ex%" /v NoInternetOpenWith /t REG_DWORD /f /d 1
+                reg add "%ex%" /v NoLowDiskSpaceChecks /t REG_DWORD /d 1 /f
+                reg add "%ex%" /v LinkResolveIgnoreLinkInfo /t REG_DWORD /d 1 /f
+                reg add "%ex%" /v NoResolveSearch /t REG_DWORD /d 1 /f
+                reg add "%ex%" /v NoResolveTrack /t REG_DWORD /d 1 /f
+                reg add "%ex%" /v NoInternetOpenWith /t REG_DWORD /d 1 /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
+                if %rmall%==1 (
+                    goto regp4y
+                ) else ( 
+                    goto MMenu
+                )
                 goto MMenu
             ) else (
             If %rp3%==0 (
@@ -1158,6 +1202,47 @@ set ver=v1_r1
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto regp3
+            ))
+
+        :regp4
+            cls
+            echo --------------------------------------------------------------
+            echo           Do you want to modify memory management?
+            echo --------------------------------------------------------------
+            echo     ! This will disable and enable various properties !
+            echo --------------------------------------------------------------
+            set /p rp4=Type 1 if yes, 0 if no:
+
+            If %errorlevel% equ 1 goto memong
+            If %rp4%==1 (
+                :regp4y
+                if not exist "%regon%" echo 1 >reg_on
+                echo 1 >rp.4
+                :: Backup
+                reg save "%mem%" "%ru1%" /y
+                :: Addition
+                reg add "%mem%" /v ClearPageFileAtShutdown /t REG_DWORD /d 1 /f
+                reg add "%mem%" /v DisablePagingExecutive /t REG_DWORD /d 1 /f
+                reg add "%mem%" /v LargeSystemCache /t REG_DWORD /d 0 /f
+                reg add "%mem%" /v NonPagedPoolQuota  /t REG_DWORD /d 0 /f
+                reg add "%mem%" /v PagedPoolQuota /t REG_DWORD /d 0 /f
+                reg add "%mem%" /v SessionPoolSize /t REG_DWORD /d 30 /f
+                reg add "%mem%" /v SessionViewSize /t REG_DWORD /d 60 /f
+                reg add "%mem%" /v SystemPages /t REG_DWORD /d 0 /f
+                reg add "%mem%" /v PoolUsageMaximum /t REG_DWORD /d 60 /f
+                echo Successful! Going back to menu...
+                PING -n 3 127.0.0.1>nul 
+                goto MMenu
+            ) else (
+            If %rp4%==0 (
+                echo Cancelled. Going back to menu...
+                PING -n 3 127.0.0.1>nul
+                goto MMenu
+            ) else ( 
+                :memong
+                echo Unknown value input! Please retry
+                PING -n 3 127.0.0.1>nul
+                goto regp4
             ))
 
     :: REGEDIT End       
