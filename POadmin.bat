@@ -1461,7 +1461,7 @@ set ver=v1_r1
             cls
             echo --------------------------------------------------------------
             echo                   Do you wish to patch DNS?
-            echo          !Only patch when the computer is connected!
+            echo         ! Only patch when the computer is connected !
             echo --------------------------------------------------------------
             set /p dnsr=Type 1 if yes, 0 if no:
 
