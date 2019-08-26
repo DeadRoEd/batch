@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v1_r3
+set ver=v1_r4
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -55,7 +55,6 @@ set ver=v1_r3
         set po=%POdir%\PO.bat
 
         set fdir=%POdir%\fcleaner
-        set rdir=%POdir%\ram
         set cddir=%POdir%\chkdsk
         set regdir=%POdir%\reg
         set regbup=%regdir%\backups
@@ -70,9 +69,6 @@ set ver=v1_r3
         )
         if not exist "%fdir%" (
             md "%fdir%"
-        )
-        if not exist "%rdir%" (
-            md "%rdir%"
         )
         if not exist "%cddir%" (
             md "%cddir%"
@@ -93,11 +89,10 @@ set ver=v1_r3
         echo Setting program environment...
     :: Program props
         set m1=1. Files Cleaner
-        set m2=2. RAM Cleaner
-        set m3=3. Registry Patcher
-        set m4=4. Main Disk Checker and Fixer
-        set m5=5. DNS Configurator
-        set m6=6. Remove bloatwares
+        set m2=2. Registry Patcher
+        set m3=3. Main Disk Checker and Fixer
+        set m4=4. DNS Configurator
+        set m5=5. Remove bloatwares
         set on=!
         set off=#
 
@@ -141,18 +136,6 @@ set ver=v1_r3
         set mem=HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management
         set ru1=%regbup%\mem.hiv
     
-    :: RAMOPS
-        set rvbs=%rdir%\rboost.vbs
-        set ron=%rdir%\r_on
-        set rc1=%rdir%\rc.1
-        set rc2=%rdir%\rc.2
-        set rc3=%rdir%\rc.3
-        set rc4=%rdir%\rc.4
-        set rt1=%rdir%\rt.1
-        set rt2=%rdir%\rt.2
-        set rt3=%rdir%\rt.3
-        set rt4=%rdir%\rt.4
-
     :: DSKCHK
         set cdonly=chkonly.bat
         set cdoboot=%strtup%\%cdonly%
@@ -235,9 +218,6 @@ set ver=v1_r3
         :fchk
         goto fccheckm
 
-        :rchk
-        goto ramcheckm
-
         :regchk
         goto regcheckm
 
@@ -266,85 +246,72 @@ set ver=v1_r3
             goto cln
         ) else (
         If %mm% equ 2 (
-            goto ram
-        ) else (
-        If %mm% equ 3 (
             goto rgp
         ) else (
-        If %mm% equ 4 (
+        If %mm% equ 3 (
             goto dskchk
         ) else (
-        If %mm% equ 5 (
+        If %mm% equ 4 (
             goto dnsc
         ) else (
-        If %mm% equ 6 (
+        If %mm% equ 5 (
             goto rmv
-        ) else ( 
+        ) else (
             :menurong
             echo Unknown value input! Please retry
             PING -n 3 127.0.0.1>nul
             goto MMenu 
-        )))))))
+        ))))))
     
     :fccheckm
         if exist "%fcon%" (
             echo %m1% %on%
-            goto rchk
+            goto regchk
         ) else ( 
             echo %m1% %off%
-            goto rchk
+            goto regchk
         )
-
     
-    :ramcheckm
-        if exist "%ron%" (
-            echo %m2% %on%
-            goto regchk
-        ) else ( 
-            echo %m2% %off%
-            goto regchk
-        )
-
     :regcheckm
         if exist "%rp1%" (
-            echo %m3% %on%
+            echo %m2% %on%
             goto dchk
         ) else (
         if exist "%rp2%" (
-            echo %m3% %on%
+            echo %m2% %on%
             goto dchk
         ) else (
         if exist "%rp3%" (
-            echo %m3% %on%
+            echo %m2% %on%
             goto dchk
         ) else ( 
         if exist "%rp4%" (
-            echo %m3% %on%
+            echo %m2% %on%
             goto dchk
         ) else ( 
-            echo %m3% %off%
+            echo %m2% %off%
             goto dchk
         ))))
 
     :diskcheckm
         if exist "%cdoboot%" (
-            echo %m4% %on% at boot
+            echo %m3% %on% at boot
             goto dschk
         ) else (
         if exist "%cdfboot%" (
-            echo %m4% %on% at boot
+            echo %m3% %on% at boot
             goto dschk
         ) else ( 
-            echo %m4% %off%
+            echo %m3% %off%
             goto dschk
         ))
 
     :dnscheckm
         if exist "%dnson%" (
-            echo %m5% %on%
+            echo %m4% %on%
             goto rbchk
         ) else (
-            echo %m5% %off%
+            echo %m4% %off%
             goto rbchk
         )
 
@@ -353,10 +320,10 @@ set ver=v1_r3
     
     :bltchkm
         if exist "%PBblt%" (
-            echo %m6% %on%
+            echo %m5% %on%
             goto mcon
         ) else ( 
-            echo %m6% %off%
+            echo %m5% %off%
             goto mcon
         )
 
@@ -368,11 +335,6 @@ set ver=v1_r3
         cls
         cd %fdir%
         goto fccheck
-
-    :ram
-        cls
-        cd %rdir%
-        goto ramcheck
 
     :rgp
         cls
@@ -410,7 +372,6 @@ set ver=v1_r3
             rd /q "%regdir%"
             rd /q "%fdir%"
             rd /q "%cddir%"
-            rd /q "%rdir%"
             rd /q "%POdir%"
             exit
         ) else (
@@ -655,189 +616,6 @@ set ver=v1_r3
                 
 
     :: FCLEAN End
-
-    :: RAMOPS Start
-
-        :ramcheck
-            echo Checking if RAM Optimizer is already enabled...
-            PING -n 6 127.0.0.1>nul
-            if exist "%ron%" goto ramexist
-            if not exist "%ron%" goto ram1
-
-        :ramexist
-            cls
-            color f3
-            echo --------------------------------------------------------------
-            :: for rcls
-            if exist "%rc1%" echo RamOps enabled for 512MB RAM
-            if exist "%rc2%" echo RamOps enabled for 1GB RAM
-            if exist "%rc3%" echo RamOps enabled for 2GB RAM
-            if exist "%rc4%" echo RamOps enabled for 4GB+ RAM
-            :: for rte
-            if exist "%rt1%" echo RamOps scheduled every 30 minutes
-            if exist "%rt2%" echo RamOps scheduled every 1 hour
-            if exist "%rt3%" echo RamOps scheduled every 2 hours
-            if exist "%rt4%" echo RamOps scheduled every 3 hours
-            echo --------------------------------------------------------------
-
-            echo --------------------------------------------------------------
-            echo        Do you want to change or disable RAM Optimizer?
-            echo --------------------------------------------------------------
-            set /p ram=Type 1 to Change, 2 to Disable, 0 to Cancel:
-            
-            If %errorlevel% equ 1 goto raong
-            If %ram% equ 1 (
-                schtasks /delete /tn "RAM Optimizer" /f
-                del /f /q *
-                goto rclean
-            ) else (
-            If %ram% equ 2 (
-                schtasks /delete /tn "RAM Optimizer" /f
-                del /f /q *
-                echo Successful! Going back to main menu...
-                PING -n 3 127.0.0.1>nul
-                goto MMenu
-            ) else (
-            If %ram% equ 0 (
-                goto MMenu
-            ) else ( 
-                :raong
-                echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto ramexist
-            )))
-
-        :ram1
-            cls
-            color f3
-            echo --------------------------------------------------------------
-            echo             Do you want to enable RAM Optimizer?
-            echo --------------------------------------------------------------
-            set /p ram=Type 1 if yes, 0 if no:
-
-            If %errorlevel% equ 1 goto ra1ong
-            If %ram% equ 1 (
-                goto rclean
-            ) else (
-            If %ram% equ 0 (
-                goto MMenu
-            ) else ( 
-                :ra1ong
-                echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto ram 
-            ))
-
-        :rclean
-            cls
-            echo --------------------------------------------------------------
-            echo                   How much RAM do you have?
-            echo --------------------------------------------------------------
-            echo 1. 512MB
-            echo 2. 1GB
-            echo 3. 2GB
-            echo 4. 4GB+
-            echo 0. Go back to main menu...
-            echo --------------------------------------------------------------
-            set /p rcln=Enter the number of choice then press ENTER:
-            
-            If %errorlevel% equ 1 goto racrong
-            If %rcln% equ 1 (
-                set rm=51200000
-                echo Setting .vbs script for 512MB RAM...
-                goto rtime
-            ) else (
-            If %rcln% equ 2 (
-                set rm=102400000
-                echo Setting .vbs script for 1GB RAM...
-                goto rtime
-            ) else (
-            If %rcln% equ 3 (
-                set rm=204800000
-                echo Setting .vbs script for 2GB RAM...
-                goto rtime
-            ) else (
-            If %rcln% equ 4 (
-                set rm=409600000
-                echo Setting .vbs script for 4GB+ RAM...
-                goto rtime
-            ) else (
-            If %rcln% equ 0 (
-                echo Going back to menu...
-                PING -n 3 127.0.0.1>nul
-                goto MMenu
-            ) else ( 
-                :racrong
-                echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto rclean
-            )))))
-
-        :rtime
-            cls
-            echo --------------------------------------------------------------
-            echo       How often do you want to execute the optimizer?
-            echo --------------------------------------------------------------
-            echo Every:
-            echo 1. 30 minutes
-            echo 2. 1 hour
-            echo 3. 2 hours
-            echo 4. 3 hours
-            echo 0. Go back to previous selection...
-            echo --------------------------------------------------------------
-            set /p rtx=Enter the number of choice then press ENTER:
-            
-            If %errorlevel% equ 1 goto rtrong
-            If %rtx% equ 1 (
-                set rtm=30
-                set rts=minute
-                echo Scheduling the task every 30 minutes...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx% equ 2 (
-                set rtm=1
-                set rts=hourly
-                echo Scheduling the task every 1 hour...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx% equ 3 (
-                set rtm=2
-                set rts=hourly
-                echo Scheduling the task every 2 hours...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx% equ 3 (
-                set rtm=3
-                set rts=hourly
-                echo Scheduling the task every 3 hours...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx% equ 0 (
-                echo Going back...
-                PING -n 3 127.0.0.1>nul
-                goto rclean
-            ) else ( 
-                :rtrong
-                echo Unknown value input! Please retry
-                PING -n 3 127.0.0.1>nul
-                goto rtime
-            )))))
-
-        :rexecute
-            echo FreeMem=Space(%rm%) >rboost.vbs
-            schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc %rts%
-            echo boostrm=%rcln% >rc.%rcln%
-            echo boosttime=%rtx% >rt.%rtx%
-            echo 1 >r_on
-            echo Successful! Going back to menu...
-            PING -n 3 127.0.0.1>nul
-            goto MMenu
-
-    :: RAMOPS End
 
     :: REGEDIT Start
 
