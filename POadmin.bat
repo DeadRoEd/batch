@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v1_r2
+set ver=v1_r3
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -151,6 +151,7 @@ set ver=v1_r2
         set rt1=%rdir%\rt.1
         set rt2=%rdir%\rt.2
         set rt3=%rdir%\rt.3
+        set rt4=%rdir%\rt.4
 
     :: DSKCHK
         set cdonly=chkonly.bat
@@ -258,25 +259,25 @@ set ver=v1_r2
         set /p mm=Please enter the number of choice then press ENTER: 
         
         If %errorlevel% equ 1 goto menurong
-        If %mm%==0 (
+        If %mm% equ 0 (
             goto x
         ) else (
-        If %mm%==1 (
+        If %mm% equ 1 (
             goto cln
         ) else (
-        If %mm%==2 (
+        If %mm% equ 2 (
             goto ram
         ) else (
-        If %mm%==3 (
+        If %mm% equ 3 (
             goto rgp
         ) else (
-        If %mm%==4 (
+        If %mm% equ 4 (
             goto dskchk
         ) else (
-        If %mm%==5 (
+        If %mm% equ 5 (
             goto dnsc
         ) else (
-        If %mm%==6 (
+        If %mm% equ 6 (
             goto rmv
         ) else ( 
             :menurong
@@ -402,7 +403,7 @@ set ver=v1_r2
         set /p close=Type 1 if yes, 0 if no:
         
         If %errorlevel% equ 1 goto xrong
-        If %close%==1 (
+        If %close% equ 1 (
             del "%po%"
             rd /q "%dnsdir%"
             rd /q "%regbup%"
@@ -413,7 +414,7 @@ set ver=v1_r2
             rd /q "%POdir%"
             exit
         ) else (
-        If %close%==0 (
+        If %close% equ 0 (
             goto MMenu
         ) else (
             :xrong
@@ -452,18 +453,18 @@ set ver=v1_r2
             set /p ecln=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto ecrong
-            If %ecln%==1 (
+            If %ecln% equ 1 (
                 if not exist "%fcon%" goto ecrong
                 echo Disabling cleaner...
                 PING -n 3 127.0.0.1>nul
                 goto fd
             ) else (
-            If %ecln%==2 (
+            If %ecln% equ 2 (
                 echo Changing menu...
                 PING -n 3 127.0.0.1>nul
                 goto fc1
             ) else (
-            If %ecln%==0 (
+            If %ecln% equ 0 (
                 echo Skipped cleaner...
                 goto MMenu
             ) else ( 
@@ -502,22 +503,22 @@ set ver=v1_r2
             set /p cln=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto crong
-            If %cln%==1 (
+            If %cln% equ 1 (
                 echo Setting cleaning preset...
                 PING -n 3 127.0.0.1>nul
                 goto fclnx
             ) else (
-            If %cln%==2 (
+            If %cln% equ 2 (
                 echo Running cleaner now...
                 PING -n 3 127.0.0.1>nul
                 goto fcrun
             ) else (
-            If %cln%==3 (
+            If %cln% equ 3 (
                 echo Changing menu...
                 PING -n 3 127.0.0.1>nul
                 goto fcexist
             ) else (
-            If %cln%==0 (
+            If %cln% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -568,7 +569,7 @@ set ver=v1_r2
                 set /p schx=Please enter the number of choice then press ENTER: 
 
                 If %errorlevel% equ 1 goto schrong
-                If %schx%==1 (
+                If %schx% equ 1 (
                     If not exist "%fcon%" echo 1 >fc_on
                     if exist "%sched2%" del "%sched2%"
                     if exist "%sched3%" del "%sched3%"
@@ -578,7 +579,7 @@ set ver=v1_r2
                     PING -n 3 127.0.0.1>nul
                     goto schedx
                 ) else (
-                If %schx%==2 (
+                If %schx% equ 2 (
                     If not exist "%fcon%" echo 1 >fc_on
                     if exist "%sched1%" del "%sched1%"
                     if exist "%sched3%" del "%sched3%"
@@ -588,7 +589,7 @@ set ver=v1_r2
                     PING -n 3 127.0.0.1>nul
                     goto schedx
                 ) else (
-                If %schx%==3 (
+                If %schx% equ 3 (
                     If not exist "%fcon%" echo 1 >fc_on
                     if exist "%sched2%" del "%sched2%"
                     if exist "%sched1%" del "%sched1%"
@@ -598,12 +599,12 @@ set ver=v1_r2
                     PING -n 3 127.0.0.1>nul
                     goto schedx
                 ) else (
-                If %schx%==4 (
+                If %schx% equ 4 (
                     echo Going back to cleaner menu...
                     PING -n 3 127.0.0.1>nul
                     goto fc1
                 ) else ( 
-                If %schx%==0 (
+                If %schx% equ 0 (
                     echo Going back to main menu...
                     PING -n 3 127.0.0.1>nul
                     goto MMenu
@@ -632,11 +633,11 @@ set ver=v1_r2
                 set /p sgx=Type 1 if yes, 0 if no:
 
                 If %errorlevel% equ 1 goto fxrong
-                If %sgx%==1 (
+                If %sgx% equ 1 (
                     cleanmgr /%sgrun%
                     goto fclna
                 ) else (
-                If %sgx%==0 (
+                If %sgx% equ 0 (
                     echo Cancelled! Going back to menu...
                     PING -n 3 127.0.0.1>nul
                     goto fc1
@@ -673,9 +674,10 @@ set ver=v1_r2
             if exist "%rc3%" echo RamOps enabled for 2GB RAM
             if exist "%rc4%" echo RamOps enabled for 4GB+ RAM
             :: for rte
-            if exist "%rt1%" echo RamOps scheduled every 1 hour
-            if exist "%rt2%" echo RamOps scheduled every 3 hours
-            if exist "%rt3%" echo RamOps scheduled every 5 hours
+            if exist "%rt1%" echo RamOps scheduled every 30 minutes
+            if exist "%rt2%" echo RamOps scheduled every 1 hour
+            if exist "%rt3%" echo RamOps scheduled every 2 hours
+            if exist "%rt4%" echo RamOps scheduled every 3 hours
             echo --------------------------------------------------------------
 
             echo --------------------------------------------------------------
@@ -684,19 +686,19 @@ set ver=v1_r2
             set /p ram=Type 1 to Change, 2 to Disable, 0 to Cancel:
             
             If %errorlevel% equ 1 goto raong
-            If %ram%==1 (
+            If %ram% equ 1 (
                 schtasks /delete /tn "RAM Optimizer" /f
                 del /f /q *
                 goto rclean
             ) else (
-            If %ram%==2 (
+            If %ram% equ 2 (
                 schtasks /delete /tn "RAM Optimizer" /f
                 del /f /q *
                 echo Successful! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %ram%==0 (
+            If %ram% equ 0 (
                 goto MMenu
             ) else ( 
                 :raong
@@ -714,10 +716,10 @@ set ver=v1_r2
             set /p ram=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto ra1ong
-            If %ram%==1 (
+            If %ram% equ 1 (
                 goto rclean
             ) else (
-            If %ram%==0 (
+            If %ram% equ 0 (
                 goto MMenu
             ) else ( 
                 :ra1ong
@@ -740,27 +742,27 @@ set ver=v1_r2
             set /p rcln=Enter the number of choice then press ENTER:
             
             If %errorlevel% equ 1 goto racrong
-            If %rcln%==1 (
+            If %rcln% equ 1 (
                 set rm=51200000
                 echo Setting .vbs script for 512MB RAM...
                 goto rtime
             ) else (
-            If %rcln%==2 (
+            If %rcln% equ 2 (
                 set rm=102400000
                 echo Setting .vbs script for 1GB RAM...
                 goto rtime
             ) else (
-            If %rcln%==3 (
+            If %rcln% equ 3 (
                 set rm=204800000
                 echo Setting .vbs script for 2GB RAM...
                 goto rtime
             ) else (
-            If %rcln%==4 (
+            If %rcln% equ 4 (
                 set rm=409600000
                 echo Setting .vbs script for 4GB+ RAM...
                 goto rtime
             ) else (
-            If %rcln%==0 (
+            If %rcln% equ 0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -777,33 +779,44 @@ set ver=v1_r2
             echo       How often do you want to execute the optimizer?
             echo --------------------------------------------------------------
             echo Every:
-            echo 1. 1 Hour
-            echo 2. 3 Hours
-            echo 3. 5 Hours
+            echo 1. 30 minutes
+            echo 2. 1 hour
+            echo 3. 2 hours
+            echo 4. 3 hours
             echo 0. Go back to previous selection...
             echo --------------------------------------------------------------
-            set /p rtx=
+            set /p rtx=Enter the number of choice then press ENTER:
             
             If %errorlevel% equ 1 goto rtrong
-            If %rtx%==1 (
+            If %rtx% equ 1 (
+                set rtm=30
+                set rts=minute
+                echo Scheduling the task every 30 minutes...
+                PING -n 3 127.0.0.1>nul
+                goto rexecute
+            ) else (
+            If %rtx% equ 2 (
                 set rtm=1
-                echo Scheduling the task every 1 Hours...
+                set rts=hourly
+                echo Scheduling the task every 1 hour...
                 PING -n 3 127.0.0.1>nul
                 goto rexecute
             ) else (
-            If %rtx%==2 (
+            If %rtx% equ 3 (
+                set rtm=2
+                set rts=hourly
+                echo Scheduling the task every 2 hours...
+                PING -n 3 127.0.0.1>nul
+                goto rexecute
+            ) else (
+            If %rtx% equ 3 (
                 set rtm=3
-                echo Scheduling the task every 3 Hours...
+                set rts=hourly
+                echo Scheduling the task every 3 hours...
                 PING -n 3 127.0.0.1>nul
                 goto rexecute
             ) else (
-            If %rtx%==3 (
-                set rtm=5
-                echo Scheduling the task every 5 Hours...
-                PING -n 3 127.0.0.1>nul
-                goto rexecute
-            ) else (
-            If %rtx%==0 (
+            If %rtx% equ 0 (
                 echo Going back...
                 PING -n 3 127.0.0.1>nul
                 goto rclean
@@ -812,11 +825,11 @@ set ver=v1_r2
                 echo Unknown value input! Please retry
                 PING -n 3 127.0.0.1>nul
                 goto rtime
-            ))))
+            )))))
 
         :rexecute
             echo FreeMem=Space(%rm%) >rboost.vbs
-            schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc hourly 
+            schtasks /create /tn "RAM Optimizer" /tr "%rvbs%" /mo %rtm% /sc %rts%
             echo boostrm=%rcln% >rc.%rcln%
             echo boosttime=%rtx% >rt.%rtx%
             echo 1 >r_on
@@ -867,13 +880,13 @@ set ver=v1_r2
             set /p resreg=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto rgrong
-            If %resreg%==1 (
+            If %resreg% equ 1 (
                 goto regresmenu
             ) else (
-            If %resreg%==2 (
+            If %resreg% equ 2 (
                 goto regmenu
             ) else (
-            If %resreg%==0 (
+            If %resreg% equ 0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -900,27 +913,27 @@ set ver=v1_r2
             set /p resrm=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto resong
-            If %resrm%==1 (
+            If %resrm% equ 1 (
                 set rall=0
                 if not exist "%rp1%" goto resong
                 goto resrm1
             ) else (
-            If %resrm%==2 (
+            If %resrm% equ 2 (
                 set rall=0
                 if not exist "%rp2%" goto resong
                 goto resrm2
             ) else (
-            If %resrm%==3 (
+            If %resrm% equ 3 (
                 set rall=0
                 if not exist "%rp3%" goto resong
                 goto resrm3
             ) else (
-            If %resrm%==4 (
+            If %resrm% equ 4 (
                 set rall=0
                 if not exist "%rp4%" goto resong
                 goto resrm4
             ) else (
-            If %resrm%==5 (
+            If %resrm% equ 5 (
                 set rall=1
                 if exist "%rp1%" goto rconfirm
                 if exist "%rp2%" goto rconfirm
@@ -928,7 +941,7 @@ set ver=v1_r2
                 if exist "%rp4%" goto rconfirm
                 goto resong
             ) else (
-            If %resrm%==0 (
+            If %resrm% equ 0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -974,7 +987,7 @@ set ver=v1_r2
                 goto rconfirm
 
             :rconfirm
-                if %rall%==1 (
+                if %rall% equ 1 (
                     if exist "%rp1%" goto resrm1
                     if not exist "%rp1%" echo Done!
                     if exist "%rp2%" goto resrm2
@@ -1020,10 +1033,10 @@ set ver=v1_r2
             set /p rgp=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto rg1rong
-            If %rgp%==1 (
+            If %rgp% equ 1 (
                 goto regmenu
             ) else (
-            If %rgp%==0 (
+            If %rgp% equ 0 (
                 goto MMenu
             ) else ( 
                 :rg1rong
@@ -1050,31 +1063,31 @@ set ver=v1_r2
             set /p rmm=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto rong
-            If %rmm%==1 (
+            If %rmm% equ 1 (
                 set rmall=0
                 if exist "%rp1%" goto rong
                 goto regp1
             ) else (
-            If %rmm%==2 (
+            If %rmm% equ 2 (
                 set rmall=0
                 if exist "%rp2%" goto rong
                 goto regp2
             ) else (
-            If %rmm%==3 (
+            If %rmm% equ 3 (
                 set rmall=0
                 if exist "%rp3%" goto rong
                 goto regp3
             ) else (
-            If %rmm%==4 (
+            If %rmm% equ 4 (
                 set rmall=0
                 if exist "%rp4%" goto rong
                 goto regp4
             ) else (
-            If %rmm%==5 (
+            If %rmm% equ 5 (
                 set rmall=1
                 goto regp1y
             ) else (
-            If %rmm%==0 (
+            If %rmm% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1093,7 +1106,7 @@ set ver=v1_r2
             set /p rp1=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto strtong
-            If %rp1%==1 (
+            If %rp1% equ 1 (
                 :regp1y
                 if not exist "%regon%" echo 1 >reg_on
                 echo 1 >rp.1
@@ -1109,13 +1122,13 @@ set ver=v1_r2
                 reg delete "%cuo%" /va /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                if %rmall%==1 (
+                if %rmall% equ 1 (
                     goto regp2y
                 ) else ( 
                     goto MMenu
                 )
             ) else (
-            If %rp1%==0 (
+            If %rp1% equ 0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1137,7 +1150,7 @@ set ver=v1_r2
             set /p rp2=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto dskrong
-            If %rp2%==1 (
+            If %rp2% equ 1 (
                 :regp2y
                 if not exist "%regon%" echo 1 >reg_on
                 echo 1 >rp.2
@@ -1151,13 +1164,13 @@ set ver=v1_r2
                 reg add "%dt%" /v LowLevelHooksTimeout /t REG_SZ /d 1000 /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                if %rmall%==1 (
+                if %rmall% equ 1 (
                     goto regp3y
                 ) else ( 
                     goto MMenu
                 )
             ) else (
-            If %rp2%==0 (
+            If %rp2% equ 0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1178,7 +1191,7 @@ set ver=v1_r2
             set /p rp3=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto fexong
-            If %rp3%==1 (
+            If %rp3% equ 1 (
                 :regp3y
                 if not exist "%regon%" echo 1 >reg_on
                 echo 1 >rp.3
@@ -1192,14 +1205,14 @@ set ver=v1_r2
                 reg add "%ex%" /v NoInternetOpenWith /t REG_DWORD /d 1 /f
                 echo Successful! Going back to menu...
                 PING -n 3 127.0.0.1>nul 
-                if %rmall%==1 (
+                if %rmall% equ 1 (
                     goto regp4y
                 ) else ( 
                     goto MMenu
                 )
                 goto MMenu
             ) else (
-            If %rp3%==0 (
+            If %rp3% equ 0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1220,7 +1233,7 @@ set ver=v1_r2
             set /p rp4=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto memong
-            If %rp4%==1 (
+            If %rp4% equ 1 (
                 :regp4y
                 if not exist "%regon%" echo 1 >reg_on
                 echo 1 >rp.4
@@ -1240,7 +1253,7 @@ set ver=v1_r2
                 PING -n 3 127.0.0.1>nul 
                 goto MMenu
             ) else (
-            If %rp4%==0 (
+            If %rp4% equ 0 (
                 echo Cancelled. Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1272,26 +1285,26 @@ set ver=v1_r2
             set /p chkx=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto chrong
-            If %chkx%==1 (
+            If %chkx% equ 1 (
                 goto chk1
             ) else (
-            If %chkx%==2 (
+            If %chkx% equ 2 (
                 goto chk2
             ) else (
-            If %chkx%==3 (
+            If %chkx% equ 3 (
                 if exist "%cdoboot%" goto chrong
                 goto chk3
             ) else (
-            If %chkx%==4 (
+            If %chkx% equ 4 (
                 if exist "%cdfboot%" goto chrong
                 goto chk4
             ) else (
-            If %chkx%==5 (
+            If %chkx% equ 5 (
                 if exist "%cdoboot%" goto chk5
                 if exist "%cdfboot%" goto chk5
                 goto chrong
             ) else (
-            If %chkx%==0 (
+            If %chkx% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1311,14 +1324,14 @@ set ver=v1_r2
             set /p rmv=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto ckrong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Checking C: disk...
                 chkdsk C:
                 echo Done! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1338,14 +1351,14 @@ set ver=v1_r2
             set /p rmv=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto ck2rong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Checking and fixing C: disk...
                 chkdsk C: /f
                 echo Done! Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1366,7 +1379,7 @@ set ver=v1_r2
             set /p rmv=Type 1 to apply, 0 to go back to main menu:
 
             If %errorlevel% equ 1 goto ck3rong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Creating batch file...
                 (
                     echo @echo off
@@ -1381,7 +1394,7 @@ set ver=v1_r2
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1403,7 +1416,7 @@ set ver=v1_r2
             set /p rmv=Type 1 to apply, 0 to go back to main menu:
 
             If %errorlevel% equ 1 goto ck4rong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Creating batch file...
                 (
                     echo @echo off
@@ -1418,7 +1431,7 @@ set ver=v1_r2
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1438,7 +1451,7 @@ set ver=v1_r2
             set /p rmv=Type 1 to remove, 0 to go back to main menu:
 
             If %errorlevel% equ 1 goto ck5rong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Deleting batch files...
                 if exist "%cdoboot%" del "%cdoboot%"
                 if exist "%cdfboot%" del "%cdfboot%"
@@ -1447,7 +1460,7 @@ set ver=v1_r2
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1499,13 +1512,13 @@ set ver=v1_r2
             set /p dnsx=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto dstrong
-            If %dnsx%==1 (
+            If %dnsx% equ 1 (
                 goto dnsfalse
             ) else (
-            If %dnsx%==2 (
+            If %dnsx% equ 2 (
                 goto dnsremenu
             ) else (
-            If %dnsx%==0 (
+            If %dnsx% equ 0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1524,13 +1537,13 @@ set ver=v1_r2
             set /p dnsr=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto dsrrong
-            If %dnsr%==1 (
+            If %dnsr% equ 1 (
                 del "%dnson%"
                 del "%don%"
                 echo Removing DNS patch and restoring stock setting...
                 goto dnsdisable
             ) else (
-            If %dnsr%==0 (
+            If %dnsr% equ 0 (
                 echo Going back to main menu...
                 goto MMenu
             ) else ( 
@@ -1557,12 +1570,12 @@ set ver=v1_r2
             set /p dnsr=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto dsfrong
-            If %dnsr%==1 (
+            If %dnsr% equ 1 (
                 echo Proceeding to DNS Patch menu...
                 PING -n 3 127.0.0.1>nul
                 goto dnsmenu
             ) else (
-            If %dnsr%==0 (
+            If %dnsr% equ 0 (
                 echo Going back to main menu...
                 goto MMenu
             ) else ( 
@@ -1587,7 +1600,7 @@ set ver=v1_r2
             set /p dnsp=Please enter the number of choice then press ENTER: 
 
             If %errorlevel% equ 1 goto dnsrong
-            If %dnsp%==1 (
+            If %dnsp% equ 1 (
                 if exist "%d1on%" goto dnsrong
                 set dns=%dns1%
                 set dnss=%dns1s%
@@ -1595,7 +1608,7 @@ set ver=v1_r2
                 set dnsn=dns.1
                 goto dnsa
             ) else (
-            If %dnsp%==2 (
+            If %dnsp% equ 2 (
                 if exist "%d2on%" goto dnsrong
                 set dns=%dns2%
                 set dnss=%dns2s%
@@ -1603,7 +1616,7 @@ set ver=v1_r2
                 set dnsn=dns.2
                 goto dnsa
             ) else (
-            If %dnsp%==3 (
+            If %dnsp% equ 3 (
                 if exist "%d3on%" goto dnsrong
                 set dns=%dns3%
                 set dnss=%dns3s%
@@ -1611,10 +1624,10 @@ set ver=v1_r2
                 set dnsn=dns.3
                 goto dnsa
             ) else (
-            If %dnsp%==4 (
+            If %dnsp% equ 4 (
                 goto dnsremenu
             ) else (
-            If %dnsp%==0 (
+            If %dnsp% equ 0 (
                 echo Going back to menu...
                 PING -n 3 127.0.0.1>nul
                 goto MMenu
@@ -1679,13 +1692,13 @@ set ver=v1_r2
             set /p bltm=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto bltrong
-            If %bltm%==1 (
+            If %bltm% equ 1 (
                 echo Proceeding to bloatware remover...
                 del "%POblt%"
                 PING -n 3 127.0.0.1>nul
                 goto rmv1
             ) else (
-            If %bltm%==0 (
+            If %bltm% equ 0 (
                 echo Going back to main menu...
                 goto MMenu
             ) else ( 
@@ -1704,12 +1717,12 @@ set ver=v1_r2
             set /p rmv=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto b1rong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 echo Proceeding to uninstall...
                 PING -n 3 127.0.0.1>nul
                 goto rmv1
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 goto MMenu
             ) else ( 
@@ -1728,10 +1741,10 @@ set ver=v1_r2
             set /p rmv=Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto rrong
-            If %rmv%==1 (
+            If %rmv% equ 1 (
                 goto rmx
             ) else (
-            If %rmv%==0 (
+            If %rmv% equ 0 (
                 echo Going back to main menu...
                 goto MMenu
             ) else ( 
@@ -1778,10 +1791,10 @@ set ver=v1_r2
             set /p bltx=Are you sure to proceed? Type 1 if yes, 0 if no:
 
             If %errorlevel% equ 1 goto bcrong
-            If %bltx%==1 (
+            If %bltx% equ 1 (
                 goto bltwr1
             ) else (
-            If %bltx%==0 (
+            If %bltx% equ 0 (
                 goto bltwr0
             ) else ( 
                 :bcrong
