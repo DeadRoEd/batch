@@ -24,3 +24,4 @@ https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-c
 https://www.registryrecycler.com/blog/2013/07/enhance-windows-memory-management-through-registry/
 https://www.rapidtables.com/convert/number/decimal-to-hex.html
 https://www.makeuseof.com/tag/10-windows-programs-uninstall/
+https://community.spiceworks.com/scripts/show/3260-uninstall-bloatware-unwanted-programs
