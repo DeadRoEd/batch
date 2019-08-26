@@ -23,3 +23,4 @@ https://helpdeskgeek.com/help-desk/delete-disable-windows-prefetch/
 https://stackoverflow.com/questions/945527/modify-cmd-exe-properties-using-the-command-prompt
 https://www.registryrecycler.com/blog/2013/07/enhance-windows-memory-management-through-registry/
 https://www.rapidtables.com/convert/number/decimal-to-hex.html
+https://www.makeuseof.com/tag/10-windows-programs-uninstall/
