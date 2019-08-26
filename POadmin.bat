@@ -434,7 +434,7 @@ set ver=v1_r2
             if exist "%fcon%" (
                 echo A cleaner exists!
                 PING -n 3 127.0.0.1>nul
-                goto fcexist
+                goto fc1
             ) else ( 
                 goto fc1
             )
@@ -570,6 +570,8 @@ set ver=v1_r2
                 If %errorlevel% equ 1 goto schrong
                 If %schx%==1 (
                     If not exist "%fcon%" echo 1 >fc_on
+                    if exist "%sched2%" del "%sched2%"
+                    if exist "%sched3%" del "%sched3%"
                     echo 1 >fsched.1
                     set sched=daily
                     echo Setting daily...
@@ -578,6 +580,8 @@ set ver=v1_r2
                 ) else (
                 If %schx%==2 (
                     If not exist "%fcon%" echo 1 >fc_on
+                    if exist "%sched1%" del "%sched1%"
+                    if exist "%sched3%" del "%sched3%"
                     echo 1 >fsched.2
                     set sched=weekly
                     echo Setting weekly...
@@ -586,6 +590,8 @@ set ver=v1_r2
                 ) else (
                 If %schx%==3 (
                     If not exist "%fcon%" echo 1 >fc_on
+                    if exist "%sched2%" del "%sched2%"
+                    if exist "%sched1%" del "%sched1%"
                     echo 1 >fsched.3
                     set sched=monthly
                     echo Setting monthly...
@@ -615,7 +621,7 @@ set ver=v1_r2
                     echo File Cleaner created by Performance Optimizer
                     echo ^cleanmgr /%sgrun%
                 ) >%fname%
-                schtasks /create /tn "File Cleaner" /tr "%fbat%" /sc "%sched%"
+                schtasks /create /tn "File Cleaner" /tr "%fbat%" /sc "%sched%" /f
                 goto fclna               
                 
             :fcrun 
