@@ -11,7 +11,7 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v1_r4
+set ver=v2
 
 :: BatchGotAdmin
     :-------------------------------------
@@ -164,8 +164,8 @@ set ver=v1_r4
         set b2="PowerDVD"
         set b3="Nero"
         set b4="Candy Crush Saga"
-        set b5="Dolby Atmos"
-        set b6="SketchBook"
+        set b5="Ask Toolbar"
+        set b6="WildTangent"
         set b7="3D viewer"
         set b8="Messaging"
         set b9="Microsoft News"
@@ -1514,7 +1514,8 @@ set ver=v1_r4
             cls
             echo --------------------------------------------------------------
             echo      Are you sure? This could take at least 10 minutes...
-            echo  The program will go back to main menu after uninstalling all
+            echo  The program will prompt again after creating list of apps 
+            echo                           to remove
             echo --------------------------------------------------------------
             set /p rmv=Type 1 if yes, 0 if no:
 
@@ -1583,6 +1584,7 @@ set ver=v1_r4
 
         :bltwr0
             del "%POblt%"
+            del "%bltlist%"
             echo Cancelled... Going back to main menu...
             PING -n 3 127.0.0.1>nul
             goto MMenu
