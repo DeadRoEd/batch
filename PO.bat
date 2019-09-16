@@ -1,6 +1,8 @@
 @echo off
 :prg
 
+set ver=v2
+
 :: This program was made by the LIMEJR Research Group as an Investigatory Project
 :: Mainly developed by Edrick Vince C. Sinsuan
 :: Methods researched and tested by the Research Group
@@ -11,7 +13,6 @@ Title Performance Optimizer %ver%
 mode con: cols=62 lines=25
 
 color f0
-set ver=v2
 
 :: BatchGotAdmin
     :-------------------------------------
