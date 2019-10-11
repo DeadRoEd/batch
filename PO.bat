@@ -184,6 +184,7 @@ color f0
         set b20="Shockwave Player"
         set b21="Microsoft Silverlight"
         set b22="Coupon Printer for Windows"
+        set b23="Latency Optimizer FREE VERSION"
     
     PING -n 3 127.0.0.1>nul
     goto MMenu2
@@ -1561,6 +1562,7 @@ color f0
                 echo ^%b20%
                 echo ^%b21%
                 echo ^%b22%
+                echo ^%b23%
             ) >%bltlist%
             copy %bltlist% "%POblt%" >nul
             PING -n 3 127.0.0.1>nul
@@ -1637,6 +1639,8 @@ color f0
             wmic product where name=%b21% call uninstall /nointeractive
             echo Removing %b22%...
             wmic product where name=%b22% call uninstall /nointeractive
+            echo Removing %b23%...
+            wmic product where name=%b23% call uninstall /nointeractive
 
             :: Removing of bloatware end
             echo Successful! Proceeding back to main menu...
