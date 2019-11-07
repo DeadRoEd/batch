@@ -1,7 +1,7 @@
 @echo off
 :prg
 
-set ver=v2
+set ver=v2.1
 
 :: This program was made by the LIMEJR Research Group as an Investigatory Project
 :: Mainly developed by Edrick Vince C. Sinsuan
@@ -51,6 +51,7 @@ color f0
         echo Preparing variables needed...
         :: Directories
         set POdir=%WINDIR%\PO
+        cd %POdir%
         set Dsktp=%USERPROFILE%\Desktop
         set strtup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
         set po=%POdir%\PO.bat
@@ -204,7 +205,6 @@ color f0
         exit 
 
     :MMenu2
-        cd %POdir%
         cls
         color f1
         echo --------------------------------------------------------------
@@ -396,7 +396,6 @@ color f0
             PING -n 3 127.0.0.1>nul
             if exist "%fcon%" (
                 echo A cleaner exists!
-                PING -n 3 127.0.0.1>nul
                 goto fc1
             ) else ( 
                 goto fc1
@@ -518,7 +517,7 @@ color f0
 
             :fclnx
                 cls
-                color f2    
+                color f2
                 echo --------------------------------------------------------------
                 echo          How often do you want the cleaner to be ran?
                 echo --------------------------------------------------------------
@@ -532,30 +531,30 @@ color f0
 
                 If %errorlevel% equ 1 goto schrong
                 If %schx% equ 1 (
-                    If not exist "%fcon%" echo 1 >fc_on
+                    If not exist "%fcon%" echo 1 >%fcon%
                     if exist "%sched2%" del "%sched2%"
                     if exist "%sched3%" del "%sched3%"
-                    echo 1 >fsched.1
+                    echo 1 >%sched1%
                     set sched=daily
                     echo Setting daily...
                     PING -n 3 127.0.0.1>nul
                     goto schedx
                 ) else (
                 If %schx% equ 2 (
-                    If not exist "%fcon%" echo 1 >fc_on
+                    If not exist "%fcon%" echo 1 >%fcon%
                     if exist "%sched1%" del "%sched1%"
                     if exist "%sched3%" del "%sched3%"
-                    echo 1 >fsched.2
+                    echo 1 >%sched2%
                     set sched=weekly
                     echo Setting weekly...
                     PING -n 3 127.0.0.1>nul
                     goto schedx
                 ) else (
                 If %schx% equ 3 (
-                    If not exist "%fcon%" echo 1 >fc_on
+                    If not exist "%fcon%" echo 1 >%fcon%
                     if exist "%sched2%" del "%sched2%"
                     if exist "%sched1%" del "%sched1%"
-                    echo 1 >fsched.3
+                    echo 1 >%sched3%
                     set sched=monthly
                     echo Setting monthly...
                     PING -n 3 127.0.0.1>nul
@@ -583,7 +582,7 @@ color f0
                     echo @echo off
                     echo File Cleaner created by Performance Optimizer
                     echo ^cleanmgr /%sgrun%
-                ) >%fname%
+                ) >%fbat%
                 schtasks /create /tn "File Cleaner" /tr "%fbat%" /sc "%sched%" /f
                 goto fclna               
                 
