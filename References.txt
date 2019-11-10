@@ -47,3 +47,4 @@ https://www.itpro.co.uk/domain-name-system-dns/30228/what-is-dns
 https://www.makeuseof.com/tag/change-dns-increase-internet-speed/
 https://medium.com/@gianpaul.r/software-development-methodologies-a856883a7630
 https://www.pcmag.com/review/364418/how-and-why-to-change-your-dns-server
+https://www.internetsociety.org/blog/2018/07/a-deeper-dive-into-public-dns-resolver-quad9/
