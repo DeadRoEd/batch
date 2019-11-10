@@ -1,3 +1,7 @@
+###
+The following list contains ALL links to websites that were used as reference or source for the program and the research paper.
+###
+
 https://commandwindows.com/command3.htm
 https://ss64.com/nt/
 https://superuser.com/questions/705813/batch-file-with-commands-to-run-as-administrator-and-standard-user?fbclid=IwAR1czUuyK6TORAwGkAKI9XFNT99jYS3EqDxILxiSqRFBieFPYppauFffoXM
